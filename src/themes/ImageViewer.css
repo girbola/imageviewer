@@ -1,0 +1,191 @@
+/* 
+    Created on : 2.10.2018, 11:21:39
+    Author     : Marko Lokka
+*/
+*{
+	-fx-base-color: #393939;
+}
+.root {
+	-fx-base-color-invert: white;
+	-fx-text-color: white;
+	-fx-text-background-color_dark: black;
+	-fx-text-background-color_light: derive(-fx-base-color, 50.0%);
+    
+    -fx-dark-border-color: derive(-fx-base-color, 80%);
+	
+    -fx-background-color: -fx-base-color;
+    
+	-fx-box-border: ladder(
+        -fx-base-color,
+        black 20.0%,
+        derive(-fx-color,-15.0%) 30.0%);
+	-fx-inner-border-horizontal: linear-gradient(to right, derive(grey,55.0%), derive(-fx-box-border, 10%));
+}
+.button {
+    -fx-background-color: 
+        -fx-base-color,
+        transparent,
+        transparent,
+        linear-gradient(derive(-fx-base-color, 40%), derive(-fx-base-color, 30%), derive(-fx-base-color, 30%), derive(-fx-base-color, 40%));
+    -fx-effect: dropshadow( three-pass-box , rgba(217,217,217,0.2) , 1, 0.0 , 0 , 1);
+    -fx-font-family: "Gaduci";
+    -fx-font-size: 10px;
+    -fx-text-fill: -fx-text-color;
+}
+
+.pane {
+	-fx-background-color: -fx-base-color;
+}
+/*******************************************************************************
+ *                                                                             *
+ * TreeView and TreeCell                                                       *
+ *                                                                             *
+ ******************************************************************************/
+
+.tree-cell {
+    -fx-padding: 3;
+    -fx-indent: 0.5em;
+	/*-fx-background-color: linear-gradient(derive(-fx-base-color, 50%), derive(-fx-base-color, 90%));*/
+	-fx-background-color: derive(-fx-base-color, 20%);
+	-fx-text-fill: -fx-text-color;
+}
+
+.tree-cell .label {
+    -fx-padding: 0 0 0 3;
+
+}
+.tree-cell > .tree-disclosure-node,
+.tree-table-row-cell > .tree-disclosure-node {
+    -fx-padding: 4.0 6.0 4.0 8.0;
+    -fx-background-color: transparent;
+}
+.tree-cell > .tree-disclosure-node > .arrow,
+.tree-table-row-cell > .tree-disclosure-node > .arrow {
+    -fx-background-color: derive(-fx-base-color, 50.0%);
+    -fx-padding: 0.333333em 0.229em 0.333333em 0.229em; /* 4 */
+    -fx-shape: "M 0 -3.5 L 4 0 L 0 3.5 z";
+}
+.tree-cell:expanded > .tree-disclosure-node > .arrow,
+.tree-table-row-cell:expanded > .tree-disclosure-node > .arrow {
+    -fx-rotate: 90.0;
+}
+
+/**************************************************************
+ 
+  ScrollBar Skin  
+ 
+****************************************************************/
+.scroll-bar{
+    -fx-background-color: derive(-fx-base-color, 30%);
+    -fx-background-radius: 2em;
+}
+.scroll-bar:vertical .track,.scroll-bar:horizontal .track {
+    -fx-background-color: transparent;
+    -fx-border-color:transparent;
+    -fx-background-radius: 2em;
+}
+.scroll-bar:vertical .track-background,.scroll-bar:horizontal .track-background {
+    -fx-background-color: transparent;
+    -fx-background-insets: 0;
+    -fx-background-radius: 2em;
+}
+.scroll-bar:horizontal .thumb {
+    -fx-background-color: derive(grey, 60%);
+    -fx-background-insets: 4 0 4 0;
+    -fx-background-radius: 2em;
+}
+
+.scroll-bar:vertical .thumb {
+    -fx-background-color: derive(grey, 60%);
+    -fx-background-insets: 0 4 0 4;
+    -fx-background-radius: 2em;
+}
+
+
+.scroll-bar:vertical .thumb:hover {
+    -fx-background-color: rgb(231,231,231);
+}
+
+.scroll-bar:horizontal .thumb:hover {
+    -fx-background-color: rgb(231,231,231);
+}
+
+
+/*Scroll barin nappulat painettuna*/
+.scroll-bar:horizontal .thumb:pressed,
+.scroll-bar:vertical .thumb:pressed {
+    -fx-background-color: rgb(255,255,255);
+}
+/*Scroll barin nappulat*/
+
+.scroll-bar:vertical .increment-button, .scroll-bar:vertical .decrement-button {
+    -fx-background-color:transparent;
+    -fx-background-radius: 2em;
+    -fx-padding: 5;
+}
+.scroll-bar:vertical .increment-arrow {
+    -fx-background-color: -fx-text-color;
+    -fx-shape: "M 0 0 L 4 8 L 8 0 Z";
+    -fx-background-radius: 2em;
+    -fx-padding: 0.25em;
+    -fx-rotate: 0;
+}
+.scroll-bar:horizontal .increment-arrow {
+    -fx-background-color: -fx-text-color;
+    -fx-shape: "M 0 0 L 4 8 L 8 0 Z";
+    -fx-background-radius: 2em;
+    -fx-padding: 0.25em;
+    -fx-rotate: -90;
+}
+
+ .scroll-bar:horizontal .decrement-arrow {
+	-fx-background-color: -fx-text-color;
+    -fx-shape: "M 0 0 L 4 8 L 8 0 Z";
+    -fx-padding: 0.25em;
+    -fx-rotate: -270;
+ }
+.scroll-bar:vertical .decrement-arrow{
+    -fx-background-color: -fx-text-color;
+    -fx-shape: "M 0 0 L 4 8 L 8 0 Z";
+    -fx-padding: 0.25em;
+    -fx-rotate: -180;
+}
+
+.scroll-bar:vertical:focused {
+    -fx-background-color: transparent;
+}
+
+.scroll-pane {
+    -fx-background-color: transparent;
+}
+.scroll-pane > .corner {    
+    -fx-background-color: transparent;
+}
+
+.split-pane > .split-pane-divider {  
+    -fx-padding: 2;
+} 
+.corner {
+	-fx-background-color: transparent;
+}
+
+/*
+Custom styleclasses
+*/
+.hbox {
+	-fx-background-color: derive(-fx-base-color, 50%);
+}
+.imageFrame {
+    -fx-background-color: -fx-base-color;
+	-fx-background-radius: 5;
+    -fx-border-color: -fx-dark-border-color;
+	-fx-border-radius: 5;
+}
+.tilePane {
+	-fx-background-color: -fx-base-color;
+}
+.viewImage {
+	-fx-border-color: black;
+	-fx-border-width: 3px;
+	-fx-border-insets: 1;
+}
