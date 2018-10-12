@@ -29,14 +29,15 @@ import javafx.stage.WindowEvent;
  * 
  * 
  * Supported file formats for creating thumbnails are:
- * video = 3gp, avi, mkv, mov, mp4, mpg
+ * video = 3GP, AVI, mkv, mov, mp4, mpg
  * image = bmp, gif, jpg, jpeg, png, tif, tiff
  * raw   = cr2, nef
  * 
  * Video player has been exported from this project.
  *
- *  Short instructionsfor usage
- * -Select folders on leftside
+ *  Short instructions for usage
+ *  ============================
+ * -Select folders on the left side
  * -Double-click opens images preview in new window.
  * 
  * 
@@ -61,10 +62,7 @@ public class ImageViewer extends Application {
 		Parent root = loader.load();
 		ImageViewerController imageViewerController = (ImageViewerController) loader.getController();
 
-		Scene scene = new Scene(root);
-//		
-		// w 763
-		// h 685
+		
 		stage.setWidth(763);
 		stage.setMinWidth(763);
 		stage.setMaxWidth(763);
@@ -80,6 +78,8 @@ public class ImageViewer extends Application {
 				imageViewerController.getModel_ImageViewer().getRenderVisibleNode().terminateAllBackgroundTasks();
 			}
 		});
+
+		Scene scene = new Scene(root);
 		scene.getStylesheets().add(ImageViewer.class.getResource("/themes/ImageViewer.css").toExternalForm());
 		stage.setScene(scene);
 		stage.show();
