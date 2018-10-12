@@ -20,29 +20,23 @@ import javafx.stage.WindowEvent;
  * External libraries used in this program:
  *
  * Metadata-extractor 2.11.0
- * =========================
  * https://github.com/drewnoakes/metadata-extractor
  * 
  * JCodec 0.2.3
- * ============
  * https://github.com/jcodec/jcodec
  * 
  * 
- * Supported file formats for creating thumbnails are:
- * video = 3GP, AVI, mkv, mov, mp4, mpg
- * image = bmp, gif, jpg, jpeg, png, tif, tiff
- * raw   = cr2, nef
+ * Supported file formats for creating thumbnails are: Image = BMP, GIF, JPG,
+ * JPEG, PNG, TIF, TIFF Raw = CR2, NEF Video = 3GP, AVI, MKV, MOV, MP4, MPG
  * 
  * Video player has been exported from this project.
  *
- *  Short instructions
- *  ==================
- * -Select folders on the left side
+ * Short instructions ================== -Select folders on the left side
  * -Double-click opens images preview in new window.
  * 
  * 
  * @(#)Author: Marko Lokka
- *  
+ * 
  */
 
 public class ImageViewer extends Application {
@@ -62,7 +56,6 @@ public class ImageViewer extends Application {
 		Parent root = loader.load();
 		ImageViewerController imageViewerController = (ImageViewerController) loader.getController();
 
-		
 		stage.setWidth(763);
 		stage.setMinWidth(763);
 		stage.setMaxWidth(763);
