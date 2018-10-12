@@ -35,8 +35,8 @@ import javafx.stage.WindowEvent;
  * 
  * Video player has been exported from this project.
  *
- *  Short instructions for usage
- *  ============================
+ *  Short instructions
+ *  ==================
  * -Select folders on the left side
  * -Double-click opens images preview in new window.
  * 
