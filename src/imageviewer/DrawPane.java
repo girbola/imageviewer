@@ -131,6 +131,7 @@ public class DrawPane extends Task<Void> {
 				stage.setResizable(false);
 				stage.setScene(scene);
 				stage.show();
+				stage.toFront();
 			}
 		});
 		return imageFrame;

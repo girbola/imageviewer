@@ -4,6 +4,7 @@ import java.util.Locale;
 import java.util.ResourceBundle;
 
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.EventHandler;
@@ -69,6 +70,7 @@ public class ImageViewer extends Application {
 			@Override
 			public void handle(WindowEvent event) {
 				imageViewerController.getModel_ImageViewer().getRenderVisibleNode().terminateAllBackgroundTasks();
+			Platform.exit();
 			}
 		});
 

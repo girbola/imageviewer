@@ -33,8 +33,6 @@ public class ImageViewerController {
 
 	private Task<Void> task;
 
-	ObservableList<Node> list = FXCollections.observableArrayList();
-
 	@FXML
 	private Button import_btn;
 	@FXML
