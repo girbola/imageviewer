@@ -33,7 +33,7 @@ https://github.com/jcodec/jcodec
 Video player has been exported from this project.
 
 ## Short instructions
-- Select folders on left side
+- Select folders on the left side
 - Double-click opens images preview in new window.
 
 ### Download compiled file
