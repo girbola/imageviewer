@@ -6,11 +6,14 @@ import java.util.concurrent.TimeUnit;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.concurrent.Task;
 import javafx.concurrent.WorkerStateEvent;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TreeCell;
@@ -30,15 +33,17 @@ public class ImageViewerController {
 
 	private Task<Void> task;
 
+//	ObservableList<Node> list = FXCollections.observableArrayList();
+
 	@FXML
 	private Button import_btn;
 	@FXML
 	private TreeView<File> folders_treeView;
 	@FXML
 	private ScrollPane scrollPane;
-
+	
+	@FXML
 	private TilePane tilePane;
-
 	@FXML
 	private void import_btn_action(ActionEvent event) {
 		Stage stage = (Stage) import_btn.getScene().getWindow();
