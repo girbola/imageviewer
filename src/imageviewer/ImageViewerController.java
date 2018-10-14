@@ -36,14 +36,9 @@ public class ImageViewerController {
 	private TreeView<File> folders_treeView;
 	@FXML
 	private ScrollPane scrollPane;
-	@FXML
-	private Button select_all_btn;
-	@FXML
-	private Button select_invert_btn;
-	@FXML
-	private Button select_none_btn;
-	@FXML
+
 	private TilePane tilePane;
+
 	@FXML
 	private void import_btn_action(ActionEvent event) {
 		Stage stage = (Stage) import_btn.getScene().getWindow();

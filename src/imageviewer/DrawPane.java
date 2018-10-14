@@ -113,7 +113,7 @@ public class DrawPane extends Task<Void> {
 				viewImagePane.getStyleClass().add("viewImage");
 
 				ImageView imageView = new ImageView();
-				Image image = new Image(path.toUri().toString(), 296, 0, true, true, true);
+				Image image = new Image(path.toUri().toString(), 294, 0, true, true, true);
 				imageView.setImage(image);
 
 				viewImagePane.getChildren().add(imageView);
