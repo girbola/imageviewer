@@ -35,3 +35,7 @@ Video player has been exported from this project.
 ## Short instructions
 - Select folders on leftside\
 - Double-click opens images preview in new window.
+
+### Download compiled file
+https://github.com/girbola/imageviewer/releases
+
