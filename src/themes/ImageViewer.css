@@ -176,7 +176,7 @@ Custom styleclasses
 	-fx-background-color: derive(-fx-base-color, 50%);
 }
 .imageFrame {
-    -fx-background-color: -fx-base-color;
+    -fx-background-color: derive(-fx-base-color, 5%);
 	-fx-background-radius: 5;
     -fx-border-color: -fx-dark-border-color;
 	-fx-border-radius: 5;
