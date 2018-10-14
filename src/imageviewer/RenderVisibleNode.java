@@ -22,13 +22,10 @@ import javafx.animation.Timeline;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.concurrent.Task;
-import javafx.concurrent.WorkerStateEvent;
-import javafx.event.EventHandler;
 import javafx.geometry.Bounds;
 import javafx.scene.Node;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.TilePane;
 
@@ -38,7 +35,6 @@ import javafx.scene.layout.TilePane;
  */
 public class RenderVisibleNode {
 
-	final private static String ERROR = RenderVisibleNode.class.getName();
 	private ExecutorService executorService;
 	private Model_ImageViewer model_ImageViewer;
 
