@@ -11,6 +11,7 @@ import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
 
+import javafx.application.Platform;
 import javafx.scene.control.ScrollPane;
 
 public class Model_ImageViewer {
@@ -27,7 +28,6 @@ public class Model_ImageViewer {
 		loadConfig();
 		i18nSupport = new I18NSupport(configuration.getLanguage(), configuration.getCountry());
 		dialogs = new Dialogs(this);
-
 	}
 
 	public Dialogs getDialogs() {
@@ -80,9 +80,10 @@ public class Model_ImageViewer {
 			marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
 			marshaller.marshal(getConfiguration(), System.out);
 			marshaller.marshal(getConfiguration(), path.toFile());
-
 		} catch (JAXBException e) {
 			e.printStackTrace();
+			getDialogs().errorAlert(e.getMessage());
+			closeProgram();
 		}
 
 	}
@@ -101,7 +102,16 @@ public class Model_ImageViewer {
 			setConfiguration(configuration);
 		} catch (JAXBException e) {
 			e.printStackTrace();
+			getDialogs().errorAlert(e.getMessage());
+			closeProgram();
 		}
+
+	}
+
+	public void closeProgram() {
+		getRenderVisibleNode().terminateAllBackgroundTasks();
+		saveConfig();
+		Platform.exit();
 
 	}
 

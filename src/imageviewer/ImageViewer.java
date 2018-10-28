@@ -16,6 +16,7 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.stage.WindowEvent;
@@ -63,15 +64,12 @@ public class ImageViewer extends Application {
 		stage.setMinHeight(685);
 		stage.setMaxHeight(685);
 		stage.setHeight(685);
-		stage.initStyle(StageStyle.UTILITY);
 		stage.setResizable(false);
 		stage.setTitle("ImageViewer");
 		stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
 			@Override
 			public void handle(WindowEvent event) {
-				imageViewerController.getModel_ImageViewer().getRenderVisibleNode().terminateAllBackgroundTasks();
-				model_ImageViewer.saveConfig();
-				Platform.exit();
+				model_ImageViewer.closeProgram();
 			}
 
 		});
@@ -80,6 +78,7 @@ public class ImageViewer extends Application {
 		scene.getStylesheets().add(ImageViewer.class.getResource("/themes/ImageViewer.css").toExternalForm());
 		stage.setScene(scene);
 		stage.show();
+		
 	}
 
 	public static void main(String[] args) {

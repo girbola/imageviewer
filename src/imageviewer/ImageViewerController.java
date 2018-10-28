@@ -93,6 +93,7 @@ public class ImageViewerController {
 		bundle = ResourceBundle.getBundle("bundle/lang", locale);
 		model_ImageViewer.getI18nSupport().setBundle(bundle);
 		model_ImageViewer.getDialogs().showAlert();
+		
 	}
 
 	@FXML

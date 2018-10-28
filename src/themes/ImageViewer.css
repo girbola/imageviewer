@@ -173,6 +173,7 @@
     -fx-background-color: transparent;
 }
 
+
 /*
 Custom styleclasses
 */
@@ -197,6 +198,9 @@ Custom styleclasses
     /* -fx-font-style: italic; */
     /* -fx-font-style: italic; */
     -fx-fill: #292929;
+}
+.text-area .content{
+	-fx-background-color: linear-gradient(derive(-fx-base-background-light, 10%), derive(-fx-base-background-light, 20%), derive(-fx-base-background-light, 20%), derive(-fx-base-background-light, 30%));
 }
 .hbox {
     -fx-background-color: derive(-fx-base-background-dark, 50%);
