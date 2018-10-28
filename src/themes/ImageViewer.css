@@ -3,30 +3,34 @@
     Author     : Marko Lokka
 */
 *{
-	-fx-base-color: #393939;
+    -fx-base-background-dark: #393939;
 }
 .root {
-	-fx-base-color-invert: white;
-	-fx-text-color: white;
-	-fx-text-background-color_dark: black;
-	-fx-text-background-color_light: derive(-fx-base-color, 50.0%);
-    
-    -fx-dark-border-color: derive(-fx-base-color, 80%);
 	
-    -fx-background-color: -fx-base-color;
-    
-	-fx-box-border: ladder(
-        -fx-base-color,
+    -fx-base-background-medium: #767676;
+    -fx-base-background-light: #b8b8b8;
+    -fx-base-background-dark-invert: white;
+    -fx-text-color: white;
+    -fx-text-background-color_dark: black;
+    -fx-text-background-color_light: derive(-fx-base-background-dark, 50.0%);
+
+    -fx-dark-border-color: derive(-fx-base-background-dark, 80%);
+
+    -fx-background-color: -fx-base-background-dark;
+
+    -fx-box-border: ladder(
+        -fx-base-background-dark,
         black 20.0%,
         derive(-fx-color,-15.0%) 30.0%);
-	-fx-inner-border-horizontal: linear-gradient(to right, derive(grey,55.0%), derive(-fx-box-border, 10%));
+    -fx-inner-border-horizontal: linear-gradient(to right, derive(grey,55.0%), derive(-fx-box-border, 10%));
 }
+
 .button {
     -fx-background-color: 
-        -fx-base-color,
+        -fx-base-background-dark,
         transparent,
         transparent,
-        linear-gradient(derive(-fx-base-color, 40%), derive(-fx-base-color, 30%), derive(-fx-base-color, 30%), derive(-fx-base-color, 40%));
+        linear-gradient(derive(-fx-base-background-dark, 40%), derive(-fx-base-background-dark, 30%), derive(-fx-base-background-dark, 30%), derive(-fx-base-background-dark, 40%));
     -fx-effect: dropshadow( three-pass-box , rgba(217,217,217,0.2) , 1, 0.0 , 0 , 1);
     -fx-font-family: "Gaduci";
     -fx-font-size: 10px;
@@ -34,7 +38,7 @@
 }
 
 .pane {
-	-fx-background-color: -fx-base-color;
+    -fx-background-color: -fx-base-background-dark;
 }
 /*******************************************************************************
  *                                                                             *
@@ -45,9 +49,9 @@
 .tree-cell {
     -fx-padding: 3;
     -fx-indent: 0.5em;
-	/*-fx-background-color: linear-gradient(derive(-fx-base-color, 50%), derive(-fx-base-color, 90%));*/
-	-fx-background-color: derive(-fx-base-color, 20%);
-	-fx-text-fill: -fx-text-color;
+    /*-fx-background-color: linear-gradient(derive(-fx-base-background-dark, 50%), derive(-fx-base-background-dark, 90%));*/
+    -fx-background-color: derive(-fx-base-background-dark, 20%);
+    -fx-text-fill: -fx-text-color;
 }
 
 .tree-cell .label {
@@ -61,7 +65,7 @@
 }
 .tree-cell > .tree-disclosure-node > .arrow,
 .tree-table-row-cell > .tree-disclosure-node > .arrow {
-    -fx-background-color: derive(-fx-base-color, 50.0%);
+    -fx-background-color: derive(-fx-base-background-dark, 50.0%);
     -fx-padding: 0.333333em 0.229em 0.333333em 0.229em; /* 4 */
     -fx-shape: "M 0 -3.5 L 4 0 L 0 3.5 z";
 }
@@ -76,7 +80,7 @@
  
 ****************************************************************/
 .scroll-bar{
-    -fx-background-color: derive(-fx-base-color, 30%);
+    -fx-background-color: derive(-fx-base-background-dark, 30%);
     -fx-background-radius: 2em;
 }
 .scroll-bar:vertical .track,.scroll-bar:horizontal .track {
@@ -138,12 +142,12 @@
     -fx-rotate: -90;
 }
 
- .scroll-bar:horizontal .decrement-arrow {
-	-fx-background-color: -fx-text-color;
+.scroll-bar:horizontal .decrement-arrow {
+    -fx-background-color: -fx-text-color;
     -fx-shape: "M 0 0 L 4 8 L 8 0 Z";
     -fx-padding: 0.25em;
     -fx-rotate: -270;
- }
+}
 .scroll-bar:vertical .decrement-arrow{
     -fx-background-color: -fx-text-color;
     -fx-shape: "M 0 0 L 4 8 L 8 0 Z";
@@ -166,26 +170,48 @@
     -fx-padding: 2;
 } 
 .corner {
-	-fx-background-color: transparent;
+    -fx-background-color: transparent;
 }
 
 /*
 Custom styleclasses
 */
+.alertDiag{
+    -fx-background-color: linear-gradient(derive(-fx-base-background-dark, 40%), derive(-fx-base-background-dark, 30%), derive(-fx-base-background-dark, 30%), derive(-fx-base-background-dark, 40%));
+    -fx-border-color: orange;
+    -fx-border-width: 1.0px;
+    -fx-text-fill: white;
+}
+.alertDiag:header *.header-panel {
+    -fx-background-color: linear-gradient(derive(-fx-base-background-dark, 40%), derive(-fx-base-background-dark, 30%), derive(-fx-base-background-dark, 30%), derive(-fx-base-background-dark, 40%));
+}
+
+.alertDiag > .button-bar > .container {
+    -fx-background-color: linear-gradient(derive(-fx-base-background-dark, 10%), derive(-fx-base-background-dark, 20%), derive(-fx-base-background-dark, 20%), derive(-fx-base-background-dark, 30%));
+}
+.alertDiag > *.label.content{    
+    -fx-text-fill: -fx-text-color;
+}
+.alertDiag:header *.header-panel *.label{
+    -fx-font-size: 12px;
+    /* -fx-font-style: italic; */
+    /* -fx-font-style: italic; */
+    -fx-fill: #292929;
+}
 .hbox {
-	-fx-background-color: derive(-fx-base-color, 50%);
+    -fx-background-color: derive(-fx-base-background-dark, 50%);
 }
 .imageFrame {
-    -fx-background-color: derive(-fx-base-color, 5%);
-	-fx-background-radius: 5;
+    -fx-background-color: derive(-fx-base-background-dark, 5%);
+    -fx-background-radius: 5;
     -fx-border-color: -fx-dark-border-color;
-	-fx-border-radius: 5;
+    -fx-border-radius: 5;
 }
 .tilePane {
-	-fx-background-color: -fx-base-color;
+    -fx-background-color: -fx-base-background-dark;
 }
 .viewImage {
-	-fx-border-color: black;
-	-fx-border-width: 3px;
-	-fx-border-insets: 1;
+    -fx-border-color: black;
+    -fx-border-width: 3px;
+    -fx-border-insets: 1;
 }

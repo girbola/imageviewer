@@ -191,8 +191,6 @@ public class RenderVisibleNode {
 
 	}
 
-	
-
 	public boolean hasStarted() {
 		return start;
 	}

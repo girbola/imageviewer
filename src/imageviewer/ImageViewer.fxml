@@ -2,8 +2,13 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.RadioMenuItem?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.control.TreeView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
@@ -14,10 +19,35 @@
    <children>
       <VBox AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <SplitPane dividerPositions="0.3" styleClass="root" VBox.vgrow="ALWAYS">
+            <MenuBar>
+              <menus>
+                <Menu mnemonicParsing="false" text="%file">
+                  <items>
+                        <Menu mnemonicParsing="false" text="%language">
+                          <items>
+                              <RadioMenuItem fx:id="language_english_radio" mnemonicParsing="false" onAction="#language_english_action" text="%english">
+                                 <toggleGroup>
+                                    <ToggleGroup fx:id="language" />
+                                 </toggleGroup>
+                              </RadioMenuItem>
+                              <RadioMenuItem fx:id="language_finnish_radio" mnemonicParsing="false" onAction="#language_finnish_action" text="%finnish" toggleGroup="$language" />
+                              <RadioMenuItem fx:id="language_swedish_radio" mnemonicParsing="false" onAction="#language_swedish_action" text="%swedish" toggleGroup="$language" />
+                          </items>
+                        </Menu>
+                        <MenuItem mnemonicParsing="false" onAction="#menuItem_File_Close_action" text="%close" />
+                  </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="%help">
+                  <items>
+                    <MenuItem mnemonicParsing="false" onAction="#about_action" text="%about" />
+                  </items>
+                </Menu>
+              </menus>
+            </MenuBar>
+            <SplitPane dividerPositions="0.3" VBox.vgrow="ALWAYS">
                <items>
-                  <TreeView fx:id="folders_treeView" styleClass="root" />
-                  <ScrollPane fx:id="scrollPane" fitToHeight="true" fitToWidth="true" styleClass="root" vbarPolicy="ALWAYS">
+                  <TreeView fx:id="folders_treeView" />
+                  <ScrollPane fx:id="scrollPane" fitToHeight="true" fitToWidth="true" vbarPolicy="ALWAYS">
                      <content>
                         <TilePane fx:id="tilePane" hgap="1.0" styleClass="tilePane" tileAlignment="TOP_LEFT" vgap="1.0">
                            <padding>

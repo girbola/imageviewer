@@ -1,7 +1,14 @@
 package imageviewer;
 
-import java.util.Locale;
-import java.util.ResourceBundle;
+import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.Marshaller;
+import javax.xml.bind.Unmarshaller;
 
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -18,11 +25,9 @@ import javafx.stage.WindowEvent;
  * 
  * External libraries used in this program:
  *
- * Metadata-extractor 2.11.0
- * https://github.com/drewnoakes/metadata-extractor
+ * Metadata-extractor 2.11.0 https://github.com/drewnoakes/metadata-extractor
  * 
- * JCodec 0.2.3
- * https://github.com/jcodec/jcodec
+ * JCodec 0.2.3 https://github.com/jcodec/jcodec
  * 
  * 
  * Supported file formats for creating thumbnails are: Image = BMP, GIF, JPG,
@@ -40,18 +45,15 @@ import javafx.stage.WindowEvent;
 
 public class ImageViewer extends Application {
 
-	private ResourceBundle bundle;
-	private Locale locale;
-
-	final public static String country = "EN";
-	final public static String lang = "en";
+	private Model_ImageViewer model_ImageViewer;
 
 	@Override
 	public void start(Stage stage) throws Exception {
-		locale = new Locale(lang, country);
-		bundle = ResourceBundle.getBundle("bundle/lang", locale);
 
-		FXMLLoader loader = new FXMLLoader(ImageViewer.class.getResource("ImageViewer.fxml"), bundle);
+		model_ImageViewer = new Model_ImageViewer();
+
+		FXMLLoader loader = new FXMLLoader(ImageViewer.class.getResource("ImageViewer.fxml"));
+		loader.setResources(model_ImageViewer.getI18nSupport().getBundle());
 		Parent root = loader.load();
 		ImageViewerController imageViewerController = (ImageViewerController) loader.getController();
 
@@ -68,15 +70,16 @@ public class ImageViewer extends Application {
 			@Override
 			public void handle(WindowEvent event) {
 				imageViewerController.getModel_ImageViewer().getRenderVisibleNode().terminateAllBackgroundTasks();
-			Platform.exit();
+				model_ImageViewer.saveConfig();
+				Platform.exit();
 			}
-		});
 
+		});
+		imageViewerController.init(model_ImageViewer);
 		Scene scene = new Scene(root);
 		scene.getStylesheets().add(ImageViewer.class.getResource("/themes/ImageViewer.css").toExternalForm());
 		stage.setScene(scene);
 		stage.show();
-		imageViewerController.init();
 	}
 
 	public static void main(String[] args) {
