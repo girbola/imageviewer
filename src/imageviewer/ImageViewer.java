@@ -1,24 +1,11 @@
 package imageviewer;
 
-import java.io.File;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.Marshaller;
-import javax.xml.bind.Unmarshaller;
-
 import javafx.application.Application;
-import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 import javafx.stage.WindowEvent;
 
 /**
@@ -60,7 +47,6 @@ public class ImageViewer extends Application {
 
 		stage.setWidth(763);
 		stage.setMinWidth(763);
-		stage.setMaxWidth(763);
 		stage.setMinHeight(685);
 		stage.setMaxHeight(685);
 		stage.setHeight(685);
@@ -74,6 +60,7 @@ public class ImageViewer extends Application {
 
 		});
 		imageViewerController.init(model_ImageViewer);
+		
 		Scene scene = new Scene(root);
 		scene.getStylesheets().add(ImageViewer.class.getResource("/themes/ImageViewer.css").toExternalForm());
 		stage.setScene(scene);

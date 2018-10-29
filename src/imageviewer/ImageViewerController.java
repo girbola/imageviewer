@@ -72,6 +72,7 @@ public class ImageViewerController {
 
 	@FXML
 	void about_action(ActionEvent event) {
+		model_ImageViewer.getDialogs().showAlert("ImageViewer 0.12\n\n" + "https://github.com/girbola/imageviewer", AlertType.INFORMATION);
 
 	}
 
@@ -82,7 +83,7 @@ public class ImageViewerController {
 		Locale locale = new Locale(model_ImageViewer.getConfiguration().getLanguage(), model_ImageViewer.getConfiguration().getCountry());
 		bundle = ResourceBundle.getBundle("bundle/lang", locale);
 		model_ImageViewer.getI18nSupport().setBundle(bundle);
-		model_ImageViewer.getDialogs().showAlert();
+		model_ImageViewer.getDialogs().showAlert(model_ImageViewer.getI18nSupport().getBundle().getString("affectNextTime"), AlertType.INFORMATION);
 	}
 
 	@FXML
@@ -92,8 +93,8 @@ public class ImageViewerController {
 		Locale locale = new Locale(model_ImageViewer.getConfiguration().getLanguage(), model_ImageViewer.getConfiguration().getCountry());
 		bundle = ResourceBundle.getBundle("bundle/lang", locale);
 		model_ImageViewer.getI18nSupport().setBundle(bundle);
-		model_ImageViewer.getDialogs().showAlert();
-		
+		model_ImageViewer.getDialogs().showAlert(model_ImageViewer.getI18nSupport().getBundle().getString("affectNextTime"), AlertType.INFORMATION);
+
 	}
 
 	@FXML
@@ -103,11 +104,9 @@ public class ImageViewerController {
 		Locale locale = new Locale(model_ImageViewer.getConfiguration().getLanguage(), model_ImageViewer.getConfiguration().getCountry());
 		bundle = ResourceBundle.getBundle("bundle/lang", locale);
 		model_ImageViewer.getI18nSupport().setBundle(bundle);
-		model_ImageViewer.getDialogs().showAlert();
+		model_ImageViewer.getDialogs().showAlert(model_ImageViewer.getI18nSupport().getBundle().getString("affectNextTime"), AlertType.INFORMATION);
 
 	}
-
-	
 
 	@FXML
 	void menuItem_File_Close_action(ActionEvent event) {
@@ -133,10 +132,6 @@ public class ImageViewerController {
 		} else if (model_ImageViewer.getConfiguration().getCountry().equals(Language.SWEDISH.getType())) {
 			language_swedish_radio.setSelected(true);
 		}
-		// model_ImageViewer.getI18nSupport().
-
-		// System.out.println("language is: " +
-		// model_ImageViewer.getI18nSupport().getBundle().getLocale().getLanguage());
 		File file = new File(System.getProperty("user.home") + File.separator + "Pictures");
 		if (file.exists()) {
 			Task<TreeItem<File>> task = new FileTreeView(file);

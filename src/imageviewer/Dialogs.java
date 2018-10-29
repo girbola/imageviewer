@@ -12,13 +12,13 @@ public class Dialogs {
 		this.model_ImageViewer = model_ImageViewer;
 	}
 
-	public void showAlert() {
-		Alert alert = new Alert(AlertType.INFORMATION);
+	public void showAlert(String message, AlertType alertType) {
+		Alert alert = new Alert(alertType);
 		DialogPane dialogPane = alert.getDialogPane();
 		dialogPane.getStylesheets().add(ImageViewer.class.getResource("/themes/ImageViewer.css").toExternalForm());
 		dialogPane.getStyleClass().add("alertDiag");
 		dialogPane.setHeaderText(null);
-		dialogPane.setContentText(model_ImageViewer.getI18nSupport().getBundle().getString("affectNextTime"));
+		dialogPane.setContentText(message);
 		alert.showAndWait();
 	}
 	
