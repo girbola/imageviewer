@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.RadioMenuItem?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.control.TreeView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.TilePane?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane id="AnchorPane" maxHeight="640.0" maxWidth="800.0" minHeight="640.0" minWidth="800.0" prefHeight="640.0" prefWidth="800.0" styleClass="root" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.girbola.imageviewer.imageviewer.ImageViewerController">
+   <children>
+      <VBox AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <MenuBar>
+              <menus>
+                <Menu mnemonicParsing="false" text="%file">
+                  <items>
+                        <Menu mnemonicParsing="false" text="%language">
+                          <items>
+                              <RadioMenuItem fx:id="language_english_radio" mnemonicParsing="false" onAction="#language_english_action" text="%english">
+                                 <toggleGroup>
+                                    <ToggleGroup fx:id="language" />
+                                 </toggleGroup>
+                              </RadioMenuItem>
+                              <RadioMenuItem fx:id="language_finnish_radio" mnemonicParsing="false" onAction="#language_finnish_action" text="%finnish" toggleGroup="$language" />
+                              <RadioMenuItem fx:id="language_swedish_radio" mnemonicParsing="false" onAction="#language_swedish_action" text="%swedish" toggleGroup="$language" />
+                          </items>
+                        </Menu>
+                        <MenuItem mnemonicParsing="false" onAction="#menuItem_File_Close_action" text="%close" />
+                  </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="%help">
+                  <items>
+                    <MenuItem mnemonicParsing="false" onAction="#about_action" text="%about" />
+                  </items>
+                </Menu>
+              </menus>
+            </MenuBar>
+            <SplitPane dividerPositions="0.3" VBox.vgrow="ALWAYS">
+               <items>
+                  <TreeView fx:id="folders_treeView" />
+                  <ScrollPane fx:id="scrollPane" fitToHeight="true" fitToWidth="true" vbarPolicy="ALWAYS">
+                     <content>
+                        <TilePane fx:id="tilePane" hgap="1.0" styleClass="tilePane" tileAlignment="TOP_LEFT" vgap="1.0">
+                           <padding>
+                              <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
+                           </padding>
+                        </TilePane>
+                     </content>
+                     <padding>
+                        <Insets top="1.0" />
+                     </padding>
+                  </ScrollPane>
+               </items>
+            </SplitPane>
+            <HBox maxHeight="100.0" styleClass="hbox" VBox.vgrow="NEVER">
+               <children>
+                  <Button fx:id="import_btn" mnemonicParsing="false" onAction="#import_btn_action" text="%openFolder" textAlignment="CENTER" />
+               </children>
+               <padding>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </padding>
+            </HBox>
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>
