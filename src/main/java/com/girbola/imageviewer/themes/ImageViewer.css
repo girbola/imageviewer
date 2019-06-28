@@ -1,11 +1,10 @@
 /* 
-    Created on : 2.10.2018, 11:21:39
+    Created on : 28.6.2019, 11:21:39
     Author     : Marko Lokka
 */
-*{
-    -fx-base-background-dark: #393939;
-}
+
 .root {
+	-fx-base-background-dark: #393939;
     -fx-base-background-medium: #767676;
     -fx-base-background-light: #b8b8b8;
     -fx-base-background-dark-invert: white;

@@ -114,6 +114,7 @@ public class DrawPane extends Task<Void> {
 				viewImagePane.getStyleClass().add("viewImage");
 
 				ImageView imageView = new ImageView();
+				imageView.setMouseTransparent(true);
 				Image image = new Image(path.toUri().toString(), 294, 0, true, true, true);
 				imageView.setImage(image);
 
@@ -122,7 +123,7 @@ public class DrawPane extends Task<Void> {
 				StackPane.setAlignment(imageView, Pos.CENTER);
 
 				Scene scene = new Scene(viewImagePane, 300, 300);
-				scene.getStylesheets().add(ImageViewer.class.getResource("/themes/ImageViewer.css").toExternalForm());
+				scene.getStylesheets().add(ImageViewer.class.getResource("/com/girbola/imageviewer/themes/ImageViewer.css").toExternalForm());
 
 				Stage stage = new Stage();
 				stage.setResizable(false);
