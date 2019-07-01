@@ -15,18 +15,17 @@ public class Dialogs {
 	public void showAlert(String message, AlertType alertType) {
 		Alert alert = new Alert(alertType);
 		DialogPane dialogPane = alert.getDialogPane();
-		dialogPane.getStylesheets().add(ImageViewer.class.getResource("/themes/ImageViewer.css").toExternalForm());
+		dialogPane.getStylesheets().add(ImageViewer.class.getResource("/com/girbola/imageviewer/themes/ImageViewer.css").toExternalForm());
 		dialogPane.getStyleClass().add("alertDiag");
 		dialogPane.setHeaderText(null);
 		dialogPane.setContentText(message);
 		alert.showAndWait();
 	}
-	
 
 	public void errorAlert(String message) {
 		Alert alert = new Alert(AlertType.ERROR);
 		DialogPane dialogPane = alert.getDialogPane();
-		dialogPane.getStylesheets().add(ImageViewer.class.getResource("/themes/ImageViewer.css").toExternalForm());
+		dialogPane.getStylesheets().add(ImageViewer.class.getResource("/com/girbola/imageviewer/themes/ImageViewer.css").toExternalForm());
 		dialogPane.getStyleClass().add("alertDiag");
 		dialogPane.setHeaderText(null);
 		TextArea textArea = new TextArea(message);

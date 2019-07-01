@@ -5,6 +5,7 @@ import java.io.FilenameFilter;
 import java.nio.file.Path;
 
 import com.girbola.imageviewer.common.utils.FileUtils;
+import com.girbola.imageviewer.videothumb.VLCPlayer;
 
 import javafx.application.Platform;
 import javafx.concurrent.Task;
@@ -102,7 +103,19 @@ public class DrawPane extends Task<Void> {
 			@Override
 			public void handle(MouseEvent event) {
 				if (event.getClickCount() == 2) {
-					viewImage(path);
+					if (FileUtils.supportedImage(path)) {
+						viewImage(path);
+					} else if (FileUtils.supportedVideo(path)) {
+						Stage stage = (Stage) imageFrame.getScene().getWindow();
+
+						try {
+							VLCPlayer vlc = new VLCPlayer(stage, path);
+							vlc.initPlayer();
+						} catch (Exception e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					}
 				}
 			}
 

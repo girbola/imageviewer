@@ -1,5 +1,7 @@
 package com.girbola.imageviewer.imageviewer;
 
+import com.sun.jna.Native;
+
 import javafx.application.Application;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
@@ -7,6 +9,8 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
+import uk.co.caprica.vlcj.binding.LibVlc;
+import uk.co.caprica.vlcj.runtime.RuntimeUtil;
 
 /**
  * ImageView is a simple program for viewing images.
@@ -34,7 +38,7 @@ import javafx.stage.WindowEvent;
 public class ImageViewer extends Application {
 
 	private Model_ImageViewer model_ImageViewer;
-
+	
 	@Override
 	public void start(Stage stage) throws Exception {
 
@@ -76,6 +80,17 @@ public class ImageViewer extends Application {
 		scene.getStylesheets().add(ImageViewer.class.getResource("/com/girbola/imageviewer/themes/ImageViewer.css").toExternalForm());
 		stage.setScene(scene);
 		stage.show();
+		Object loadLibrary = null;
+
+		try {
+			loadLibrary = Native.loadLibrary(RuntimeUtil.getLibVlcLibraryName(), LibVlc.class);
+			model_ImageViewer.getConfiguration().setVLCSupported(true);
+			System.out.println("vlc supported!!");
+		} catch (UnsatisfiedLinkError ex) {
+			System.out.println("VLC won't work! " + ex);
+			//			setVlcSupport(false);
+			model_ImageViewer.getConfiguration().setVLCSupported(false);
+		}
 
 	}
 

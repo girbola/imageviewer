@@ -6,6 +6,9 @@ import java.util.ResourceBundle;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 
+import com.adobe.xmp.options.Options;
+import com.girbola.imageviewer.imageviewer.options.SettingsController;
+
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -14,8 +17,12 @@ import javafx.concurrent.WorkerStateEvent;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.RadioMenuItem;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.ToggleGroup;
@@ -40,11 +47,13 @@ public class ImageViewerController {
 	@FXML
 	private ToggleGroup language;
 	@FXML
-	RadioMenuItem language_finnish_radio;
+	private MenuItem settings_menuItem;
 	@FXML
-	RadioMenuItem language_english_radio;
+	private RadioMenuItem language_finnish_radio;
 	@FXML
-	RadioMenuItem language_swedish_radio;
+	private RadioMenuItem language_english_radio;
+	@FXML
+	private RadioMenuItem language_swedish_radio;
 	@FXML
 	private Button import_btn;
 	@FXML
@@ -55,6 +64,27 @@ public class ImageViewerController {
 	private TilePane tilePane;
 	@FXML
 	private ResourceBundle bundle;
+
+	@FXML
+	private void settings_menuItem_action(ActionEvent event) {
+		Parent root = null;
+		FXMLLoader loader = null;
+		SettingsController settingsController = null;
+		try {
+			loader = new FXMLLoader(SettingsController.class.getResource("Settings.fxml"));
+			loader.setResources(model_ImageViewer.getI18nSupport().getBundle());
+			root = loader.load();
+			settingsController = (SettingsController) loader.getController();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		Scene options = new Scene(root);
+		options.getStylesheets().add(ImageViewer.class.getResource("/com/girbola/imageviewer/themes/Options.css").toExternalForm());
+
+		Stage stage = new Stage();
+		stage.setScene(options);
+		stage.show();
+	}
 
 	@FXML
 	private void import_btn_action(ActionEvent event) {

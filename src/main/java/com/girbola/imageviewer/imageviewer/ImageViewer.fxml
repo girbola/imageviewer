@@ -34,6 +34,7 @@
                               <RadioMenuItem fx:id="language_swedish_radio" mnemonicParsing="false" onAction="#language_swedish_action" text="%swedish" toggleGroup="$language" />
                           </items>
                         </Menu>
+                        <MenuItem fx:id="settings_menuItem" mnemonicParsing="false" onAction="#settings_menuItem_action" text="%settings" />
                         <MenuItem mnemonicParsing="false" onAction="#menuItem_File_Close_action" text="%close" />
                   </items>
                 </Menu>
