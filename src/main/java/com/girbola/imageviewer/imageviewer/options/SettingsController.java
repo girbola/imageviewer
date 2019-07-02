@@ -4,7 +4,6 @@ import java.io.File;
 import java.nio.file.Paths;
 
 import com.girbola.imageviewer.imageviewer.Dialogs;
-import com.girbola.imageviewer.imageviewer.ImageViewer;
 import com.girbola.imageviewer.imageviewer.Model_ImageViewer;
 import com.sun.jna.NativeLibrary;
 
@@ -14,7 +13,7 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.stage.FileChooser;
-import uk.co.caprica.vlcj.runtime.RuntimeUtil;
+import uk.co.caprica.vlcj.binding.RuntimeUtil;
 
 public class SettingsController {
 
@@ -40,13 +39,12 @@ public class SettingsController {
 				vlcPath_tf.setText(model_ImageViewer.getConfiguration().getVlcPath());
 				model_ImageViewer.getConfiguration().setVLCSupported(true);
 				System.out.println("written to propertyfile: " + vlcPath_fc);
-				
+
 			} catch (Exception e) {
 				System.err.println("Error: " + e);
 			}
 		} else {
-			Dialogs dialog = new Dialogs(model_ImageViewer);
-			dialog.showAlert(model_ImageViewer.getI18nSupport().getBundle().getString("noValidVlcPathChosen"), AlertType.WARNING);
+			Dialogs.showAlert(model_ImageViewer.getI18nSupport().getBundle().getString("noValidVlcPathChosen"), AlertType.WARNING);
 		}
 	}
 

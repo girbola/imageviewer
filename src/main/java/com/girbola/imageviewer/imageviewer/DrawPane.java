@@ -5,12 +5,14 @@ import java.io.FilenameFilter;
 import java.nio.file.Path;
 
 import com.girbola.imageviewer.common.utils.FileUtils;
-import com.girbola.imageviewer.videothumb.VLCPlayer;
+import com.girbola.imageviewer.vlc.VLCPlayerController;
 
 import javafx.application.Platform;
 import javafx.concurrent.Task;
 import javafx.event.EventHandler;
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -18,6 +20,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.TilePane;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 
 /**
  *
@@ -99,52 +102,45 @@ public class DrawPane extends Task<Void> {
 		imageFrame.setPrefSize(width, width);
 		imageFrame.setMinSize(width, width);
 		imageFrame.setMaxSize(width, width);
-		imageFrame.setOnMouseClicked(new EventHandler<MouseEvent>() {
-			@Override
-			public void handle(MouseEvent event) {
-				if (event.getClickCount() == 2) {
-					if (FileUtils.supportedImage(path)) {
-						viewImage(path);
-					} else if (FileUtils.supportedVideo(path)) {
-						Stage stage = (Stage) imageFrame.getScene().getWindow();
-
-						try {
-							VLCPlayer vlc = new VLCPlayer(stage, path);
-							vlc.initPlayer();
-						} catch (Exception e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
-					}
-				}
-			}
-
-			private void viewImage(Path path) {
-				StackPane viewImagePane = new StackPane();
-				viewImagePane.setPrefSize(300, 300);
-				viewImagePane.setMinSize(300, 300);
-				viewImagePane.setMaxSize(300, 300);
-				viewImagePane.getStyleClass().add("viewImage");
-
-				ImageView imageView = new ImageView();
-				imageView.setMouseTransparent(true);
-				Image image = new Image(path.toUri().toString(), 294, 0, true, true, true);
-				imageView.setImage(image);
-
-				viewImagePane.getChildren().add(imageView);
-
-				StackPane.setAlignment(imageView, Pos.CENTER);
-
-				Scene scene = new Scene(viewImagePane, 300, 300);
-				scene.getStylesheets().add(ImageViewer.class.getResource("/com/girbola/imageviewer/themes/ImageViewer.css").toExternalForm());
-
-				Stage stage = new Stage();
-				stage.setResizable(false);
-				stage.setScene(scene);
-				stage.show();
-				stage.toFront();
-			}
-		});
+//		imageFrame.setOnMouseClicked(new EventHandler<MouseEvent>() {
+//			@Override
+//			public void handle(MouseEvent event) {
+//				if (event.getClickCount() == 2) {
+//					if (FileUtils.supportedImage(path)) {
+//						//						viewImage(path);
+//					} else if (FileUtils.supportedVideo(path)) {
+//						try {
+//							Parent root = null;
+//							FXMLLoader loader = new FXMLLoader(VLCPlayerController.class.getResource("VLCPlayer.fxml"));
+//							root = loader.load();
+//							VLCPlayerController vlcPlayerController = (VLCPlayerController) loader.getController();
+//							Scene scene = new Scene(root);
+//							scene.getStylesheets()
+//									.add(ImageViewer.class.getResource("/com/girbola/imageviewer/themes/ImageViewer.css").toExternalForm());
+//
+//							Stage stage = new Stage();
+//							stage.setScene(scene);
+//							vlcPlayerController.init(path, stage);
+//							stage.show();
+//							stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+//
+//								@Override
+//								public void handle(WindowEvent event) {
+//									vlcPlayerController.getMediaPlayer().release();
+//								}
+//
+//							});
+//							/*VLCPlayeri vlc = new VLCPlayeri(path);
+//							vlc.initPlayer(); */
+//						} catch (Exception e) {
+//							// TODO Auto-generated catch block
+//							e.printStackTrace();
+//						}
+//					}
+//				}
+//			}
+//
+//		});
 		return imageFrame;
 	}
 

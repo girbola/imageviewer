@@ -56,16 +56,18 @@ public class VideoThumbMaker extends Task<List<BufferedImage>> {
 			System.err.println("buffered failed: " + e);
 			return;
 		}
-	
+
 		StackPane pane = (StackPane) imageView.getParent();
 		pane.setStyle("-fx-background-color: white;");
-		if(list.isEmpty()) {
-			System.err.println("video thumblist were empty. returning: "+fileName);
-		pane.getChildren().add(new Label("Video. NP"));
+		if (list.isEmpty()) {
+			System.err.println("video thumblist were empty. returning: " + fileName);
+			pane.getChildren().add(new Label("Video. NP"));
 			return;
-		}else {
-			pane.getChildren().add(new Label("Video"));
-			
+		} else {
+			Label label = new Label("Video");
+			label.setMouseTransparent(true);
+			pane.getChildren().add(label);
+
 		}
 		VideoPreview bvp = new VideoPreview(list, imageView);
 		imageView.setImage(bvp.getImage(0));

@@ -1,13 +1,15 @@
 package com.girbola.imageviewer.imageviewer;
 
 import java.io.File;
+import java.nio.file.Path;
 import java.util.Locale;
 import java.util.ResourceBundle;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 
-import com.adobe.xmp.options.Options;
+import com.girbola.imageviewer.common.utils.FileUtils;
 import com.girbola.imageviewer.imageviewer.options.SettingsController;
+import com.girbola.imageviewer.vlc.VLCPlayerController;
 
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
@@ -18,6 +20,8 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert.AlertType;
@@ -29,9 +33,14 @@ import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.TreeCell;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.TilePane;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 
 /**
  *
@@ -86,6 +95,32 @@ public class ImageViewerController {
 		stage.show();
 	}
 
+	private void viewImage(Path path) {
+		StackPane viewImagePane = new StackPane();
+		viewImagePane.setPrefSize(300, 300);
+		viewImagePane.setMinSize(300, 300);
+		viewImagePane.setMaxSize(300, 300);
+		viewImagePane.getStyleClass().add("viewImage");
+
+		ImageView imageView = new ImageView();
+		imageView.setMouseTransparent(true);
+		Image image = new Image(path.toUri().toString(), 294, 0, true, true, true);
+		imageView.setImage(image);
+
+		viewImagePane.getChildren().add(imageView);
+
+		StackPane.setAlignment(imageView, Pos.CENTER);
+
+		Scene scene = new Scene(viewImagePane, 300, 300);
+		scene.getStylesheets().add(ImageViewer.class.getResource("/com/girbola/imageviewer/themes/ImageViewer.css").toExternalForm());
+
+		Stage stage = new Stage();
+		stage.setResizable(false);
+		stage.setScene(scene);
+		stage.show();
+		stage.toFront();
+	}
+
 	@FXML
 	private void import_btn_action(ActionEvent event) {
 		Stage stage = (Stage) import_btn.getScene().getWindow();
@@ -94,6 +129,37 @@ public class ImageViewerController {
 		if (file != null && file.exists()) {
 			validateTask(task);
 			task = new DrawPane(file, tilePane, model_ImageViewer);
+			task.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
+				@Override
+				public void handle(WorkerStateEvent event) {
+					System.out.println("Event: " + event);
+					tilePane.setOnMouseClicked(new EventHandler<MouseEvent>() {
+						@Override
+						public void handle(MouseEvent event) {
+							System.out.println("Target: " + event.getTarget());
+							if (event.getTarget() instanceof StackPane) {
+								StackPane stackPane = (StackPane) event.getTarget();
+								System.out.println("Stackpane found!: " + stackPane.getId());
+							}
+						}
+					});
+				}
+
+			});
+			task.setOnCancelled(new EventHandler<WorkerStateEvent>() {
+				@Override
+				public void handle(WorkerStateEvent event) {
+
+				}
+			});
+
+			task.setOnFailed(new EventHandler<WorkerStateEvent>() {
+				@Override
+				public void handle(WorkerStateEvent event) {
+
+				}
+			});
+
 			new Thread(task).start();
 		}
 	}
@@ -209,9 +275,77 @@ public class ImageViewerController {
 			@Override
 			public void changed(ObservableValue<? extends TreeItem<File>> observable, TreeItem<File> oldValue, TreeItem<File> newValue) {
 				task = new DrawPane(newValue.getValue(), tilePane, model_ImageViewer);
+				task.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
+					@Override
+					public void handle(WorkerStateEvent event) {
+						System.out.println("Event: " + event);
+						tilePane.setOnMouseClicked(new EventHandler<MouseEvent>() {
+							@Override
+							public void handle(MouseEvent event) {
+								System.out.println("Target: " + event.getTarget());
+								if (event.getTarget() instanceof StackPane && ((Node) event.getTarget()).getId().equals("imageFrame")) {
+									StackPane stackPane = (StackPane) event.getTarget();
+									Path path = (Path) stackPane.getUserData();
+									if (FileUtils.supportedVideo(path)) {
+										System.out.println("Video found!: " + path);
+										viewVideo(path);
+									} else if (FileUtils.supportedImage(path)) {
+										viewImage(path);
+									} else if (FileUtils.supportedRaw(path)) {
+
+									} else {
+										Dialogs.showAlert("Not supported media format", AlertType.INFORMATION);
+									}
+								}
+							}
+
+						});
+					}
+
+				});
+				task.setOnCancelled(new EventHandler<WorkerStateEvent>() {
+					@Override
+					public void handle(WorkerStateEvent event) {
+
+					}
+				});
+
+				task.setOnFailed(new EventHandler<WorkerStateEvent>() {
+					@Override
+					public void handle(WorkerStateEvent event) {
+
+					}
+				});
+
 				new Thread(task).start();
 			}
 		});
+	}
+
+	private void viewVideo(Path path) {
+		try {
+			Parent root = null;
+			FXMLLoader loader = new FXMLLoader(VLCPlayerController.class.getResource("VLCPlayer.fxml"));
+			root = loader.load();
+			VLCPlayerController vlcPlayerController = (VLCPlayerController) loader.getController();
+			Scene scene = new Scene(root);
+			scene.getStylesheets().add(ImageViewer.class.getResource("/com/girbola/imageviewer/themes/ImageViewer.css").toExternalForm());
+
+			Stage stage = new Stage();
+			stage.setScene(scene);
+			vlcPlayerController.init(path, stage);
+			stage.show();
+			stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+
+				@Override
+				public void handle(WindowEvent event) {
+					vlcPlayerController.getMediaPlayer().release();
+				}
+
+			});
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	private void validateTask(Task<Void> task) {

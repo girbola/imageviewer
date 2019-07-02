@@ -6,13 +6,13 @@ import javafx.scene.control.DialogPane;
 import javafx.scene.control.TextArea;
 
 public class Dialogs {
-	private Model_ImageViewer model_ImageViewer;
+//	private Model_ImageViewer model_ImageViewer;
 
-	public Dialogs(Model_ImageViewer model_ImageViewer) {
-		this.model_ImageViewer = model_ImageViewer;
-	}
+//	public Dialogs(Model_ImageViewer model_ImageViewer) {
+//		this.model_ImageViewer = model_ImageViewer;
+//	}
 
-	public void showAlert(String message, AlertType alertType) {
+	public static void showAlert(String message, AlertType alertType) {
 		Alert alert = new Alert(alertType);
 		DialogPane dialogPane = alert.getDialogPane();
 		dialogPane.getStylesheets().add(ImageViewer.class.getResource("/com/girbola/imageviewer/themes/ImageViewer.css").toExternalForm());
@@ -22,7 +22,7 @@ public class Dialogs {
 		alert.showAndWait();
 	}
 
-	public void errorAlert(String message) {
+	public static void errorAlert(String message, Model_ImageViewer model_ImageViewer) {
 		Alert alert = new Alert(AlertType.ERROR);
 		DialogPane dialogPane = alert.getDialogPane();
 		dialogPane.getStylesheets().add(ImageViewer.class.getResource("/com/girbola/imageviewer/themes/ImageViewer.css").toExternalForm());
