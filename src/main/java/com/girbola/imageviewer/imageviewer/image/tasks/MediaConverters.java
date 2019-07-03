@@ -27,7 +27,8 @@ import javafx.util.Duration;
  */
 public class MediaConverters {
 
-	public static Task<List<BufferedImage>> handleVideoThumbnail(Path fileName, ImageView imageView, double image_width) {
+	@Deprecated
+	public static Task<List<BufferedImage>> handleVideoThumbnail_(Path fileName, ImageView imageView, double image_width) {
 		Task<List<BufferedImage>> task = new Task<List<BufferedImage>>() {
 			@Override
 			protected List<BufferedImage> call() throws Exception {
@@ -37,7 +38,8 @@ public class MediaConverters {
 				} catch (Exception ex) {
 					System.out.println("Exception ex: " + ex);
 					return null;
-				}System.out.println("list size is: " + list.size());
+				}
+				System.out.println("list size is: " + list.size());
 				return list;
 			}
 

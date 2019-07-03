@@ -26,7 +26,7 @@ public class Model_ImageViewer {
 	public Model_ImageViewer() {
 		loadConfig();
 		i18nSupport = new I18NSupport(configuration.getLanguage(), configuration.getCountry());
-//		dialogs = new Dialogs(this);
+		//		dialogs = new Dialogs(this);
 	}
 
 	public Dialogs getDialogs() {
@@ -101,7 +101,7 @@ public class Model_ImageViewer {
 			setConfiguration(configuration);
 		} catch (JAXBException e) {
 			e.printStackTrace();
-			Dialogs.errorAlert(e.getMessage(),this);
+			Dialogs.errorAlert(e.getMessage(), this);
 			closeProgram();
 		}
 

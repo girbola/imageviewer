@@ -5,8 +5,12 @@ import java.nio.file.Path;
 import java.util.concurrent.Semaphore;
 
 import javafx.animation.AnimationTimer;
+import javafx.animation.FadeTransition;
 import javafx.application.Platform;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -17,10 +21,13 @@ import javafx.scene.image.PixelFormat;
 import javafx.scene.image.PixelWriter;
 import javafx.scene.image.WritableImage;
 import javafx.scene.image.WritablePixelFormat;
-import javafx.scene.layout.Region;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.transform.Affine;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 import uk.co.caprica.vlcj.factory.MediaPlayerFactory;
 import uk.co.caprica.vlcj.media.MediaRef;
 import uk.co.caprica.vlcj.media.TrackType;
@@ -51,10 +58,6 @@ public class VLCPlayerController {
 	private WritableImage img;
 	private AnimationTimer timer;
 
-	public void AnimationTimerJavaFXDirectRenderingTest() {
-
-	}
-
 	public void init(Path file, Stage stage) {
 		this.file = file;
 		this.vlc_stage = stage;
@@ -67,6 +70,17 @@ public class VLCPlayerController {
 
 		mediaPlayer.events().addMediaPlayerEventListener(new MPE(slider));
 		mediaPlayer.videoSurface().set(new JavaFxVideoSurface());
+
+		volume_slider.valueProperty().addListener(new ChangeListener<Number>() {
+
+			@Override
+			public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+				System.out.println("volumeee: " + newValue);
+				Platform.runLater(() -> {
+					mediaPlayer.audio().setVolume(newValue.intValue());
+				});
+			}
+		});
 		mediaPlayer.media().prepare(file.toString());
 		timer = new AnimationTimer() {
 			@Override
@@ -74,13 +88,45 @@ public class VLCPlayerController {
 				renderFrame();
 			}
 		};
+		Pane pane = (Pane) stage.getScene().getRoot();
+		//		FadeTransition ft = new FadeTransition(Duration.seconds(1), bottomBar);
+		//		ft.setAutoReverse(false);
+		//		ft.setCycleCount(1);
+		//		ft.setFromValue(1);
+		//		ft.setToValue(0);
+
+		pane.setOnMouseMoved(new EventHandler<MouseEvent>() {
+			@Override
+			public void handle(MouseEvent event) {
+				System.out.println("pane moved: " + event);
+				//				System.out.println("hbox: " + hbox);
+				//				Platform.runLater(()-> {
+				//					bottomBar.setVisible(true);
+				//				});
+
+				FadeTransition ft = new FadeTransition(Duration.millis(2200), bottomBar);
+				ft.setFromValue(1.0);
+				ft.setToValue(0.0);
+				ft.setAutoReverse(true);
+				ft.play();
+			}
+		});
+		vlc_canvas.widthProperty().bind(pane.widthProperty());
+		vlc_canvas.heightProperty().bind(pane.heightProperty());
+
 		timer.start();
 		mediaPlayer.media().play(file.toString());
 
 	}
 
 	@FXML
+	private VBox bottomBar;
+
+	@FXML
 	private Canvas vlc_canvas;
+
+	@FXML
+	private Slider volume_slider;
 
 	@FXML
 	private Slider slider;
@@ -336,7 +382,7 @@ public class VLCPlayerController {
 
 		@Override
 		public void volumeChanged(MediaPlayer mediaPlayer, float volume) {
-
+			System.out.println("volume: " + volume);
 		}
 
 		@Override
@@ -359,6 +405,11 @@ public class VLCPlayerController {
 
 		}
 
+	}
+
+	public void stop() {
+		timer.stop();
+		mediaPlayer.release();
 	}
 
 }

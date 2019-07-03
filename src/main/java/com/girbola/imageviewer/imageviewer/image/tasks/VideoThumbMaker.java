@@ -13,6 +13,7 @@ import javafx.application.Platform;
 import javafx.concurrent.Task;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.event.EventHandler;
+import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -66,11 +67,12 @@ public class VideoThumbMaker extends Task<List<BufferedImage>> {
 		} else {
 			Label label = new Label("Video");
 			label.setMouseTransparent(true);
+			StackPane.setAlignment(label, Pos.TOP_CENTER);
 			pane.getChildren().add(label);
-
 		}
 		VideoPreview bvp = new VideoPreview(list, imageView);
 		imageView.setImage(bvp.getImage(0));
+		
 		pane.setOnMouseEntered(new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent event) {
@@ -84,7 +86,7 @@ public class VideoThumbMaker extends Task<List<BufferedImage>> {
 						}
 					});
 				}));
-				timeLine.setCycleCount(10);
+				timeLine.setCycleCount(6);
 				timeLine.play();
 			}
 		});
@@ -94,6 +96,8 @@ public class VideoThumbMaker extends Task<List<BufferedImage>> {
 				if (timeLine != null) {
 					timeLine.stop();
 				}
+				imageView.setImage(bvp.getImage(0));
+				
 			}
 		});
 		System.out.println("List size is gonna be: " + list.size());

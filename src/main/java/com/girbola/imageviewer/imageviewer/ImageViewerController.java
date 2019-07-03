@@ -36,10 +36,12 @@ import javafx.scene.control.TreeView;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.TilePane;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import javafx.stage.WindowEvent;
 
 /**
@@ -333,16 +335,31 @@ public class ImageViewerController {
 
 			Stage stage = new Stage();
 			stage.setScene(scene);
+
+			stage.initStyle(StageStyle.UNDECORATED);
 			vlcPlayerController.init(path, stage);
 			stage.show();
+
+			stage.focusedProperty().addListener(new ChangeListener<Boolean>() {
+
+				@Override
+				public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+					System.out.println("focus? " + newValue);
+					if (!newValue) {
+						vlcPlayerController.stop();
+						stage.close();
+					}
+				}
+			});
 			stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
 
 				@Override
 				public void handle(WindowEvent event) {
-					vlcPlayerController.getMediaPlayer().release();
+					vlcPlayerController.stop();
 				}
 
 			});
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
