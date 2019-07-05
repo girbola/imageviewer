@@ -1,10 +1,5 @@
 package com.girbola.imageviewer.imageviewer;
 
-import java.io.File;
-import java.nio.file.Paths;
-
-import com.sun.jna.NativeLibrary;
-
 import javafx.application.Application;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
@@ -14,6 +9,7 @@ import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import uk.co.caprica.vlcj.binding.RuntimeUtil;
 import uk.co.caprica.vlcj.factory.discovery.NativeDiscovery;
+import uk.co.caprica.vlcj.factory.discovery.strategy.NativeDiscoveryStrategy;
 import uk.co.caprica.vlcj.support.Info;
 
 /**
@@ -59,17 +55,15 @@ public class ImageViewer extends Application {
 			imageViewerController = (ImageViewerController) loader.getController();
 
 		} catch (Exception e) {
-			e.getMessage();
-			System.out.println("TRACE START");
 			e.printStackTrace();
 		}
 
-		stage.setWidth(763);
-		stage.setMinWidth(763);
-		stage.setMinHeight(685);
-		stage.setMaxHeight(685);
-		stage.setHeight(685);
-		stage.setResizable(false);
+//		stage.setWidth(763);
+//		stage.setMinWidth(763);
+//		stage.setMinHeight(685);
+//		stage.setMaxHeight(685);
+//		stage.setHeight(685);
+//		stage.setResizable(false);
 		stage.setTitle("ImageViewer");
 		stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
 			@Override
@@ -100,23 +94,41 @@ public class ImageViewer extends Application {
 
 	}
 
+	public boolean discovery() {
+		NativeDiscovery dis = new NativeDiscovery() {
+
+			@Override
+			protected void onFound(String path, NativeDiscoveryStrategy strategy) {
+				System.out.println("Found; " + " path: " + path + " strategy: " + strategy);
+			}
+
+			@Override
+			protected void onNotFound() {
+				System.out.println("Native not found");
+			}
+
+		};
+		boolean found = new NativeDiscovery().discover();
+		System.out.println("found? " + found);
+
+		return false;
+	}
+
 	private void initVlc() {
-
-
-
-		try {
-	System.setProperty("VLC_PLUGIN_PATH", Paths.get("C:\\Program Files\\VideoLAN\\VLC").getParent() + File.separator + "plugins");
-			NativeLibrary.addSearchPath(RuntimeUtil.getLibVlcLibraryName(), Paths.get("C:\\Program Files\\VideoLAN\\VLC").getParent().toString());
-boolean found = new NativeDiscovery().discover();
-System.out.println("foudn? " + found);
-		
-			System.out.println("Path add: " + Paths.get("C:\\Program Files\\VideoLAN\\VLC").getParent().toString());
-			System.out.println(Paths.get("C:\\Program Files\\VideoLAN\\VLC").getParent() + "plugins");
-			//			NativeLibrary.addSearchPath(RuntimeUtil.getLibVlcLibraryName(), System.getProperty("C:/Program Files/VideoLAN/VLC/plugins"));
-			//			System.setProperty("VLC_PLUGIN_PATH", System.getProperty("C:/Program Files/VideoLAN/VLC"));
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+discovery();
+		/*	try {
+		System.setProperty("VLC_PLUGIN_PATH", Paths.get("C:\\Program Files\\VideoLAN\\VLC").getParent() + File.separator + "plugins");
+				NativeLibrary.addSearchPath(RuntimeUtil.getLibVlcLibraryName(), Paths.get("C:\\Program Files\\VideoLAN\\VLC").getParent().toString());
+		boolean found = new NativeDiscovery().discover();
+		System.out.println("foudn? " + found);
+			
+				System.out.println("Path add: " + Paths.get("C:\\Program Files\\VideoLAN\\VLC").getParent().toString());
+				System.out.println(Paths.get("C:\\Program Files\\VideoLAN\\VLC").getParent() + "plugins");
+				//			NativeLibrary.addSearchPath(RuntimeUtil.getLibVlcLibraryName(), System.getProperty("C:/Program Files/VideoLAN/VLC/plugins"));
+				//			System.setProperty("VLC_PLUGIN_PATH", System.getProperty("C:/Program Files/VideoLAN/VLC"));
+			} catch (Exception e) {
+				e.printStackTrace();
+			}*/
 		Info info = Info.getInstance();
 
 		System.out.printf("vlcj             : %s%n", info.vlcjVersion() != null ? info.vlcjVersion() : "<version not available>");

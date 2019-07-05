@@ -15,13 +15,14 @@ import javafx.scene.control.ScrollPane;
 
 public class Model_ImageViewer {
 
-	final private double width = 100;
+	final private double width = 200;
 
 	private ScrollPane scrollPane;
 	private RenderVisibleNode renderVisibleNode;
 	private I18NSupport i18nSupport;
 	private Configuration configuration = new Configuration();
 	private Dialogs dialogs;
+	private SelectionModel selectionModel = new SelectionModel();
 
 	public Model_ImageViewer() {
 		loadConfig();
@@ -112,6 +113,13 @@ public class Model_ImageViewer {
 		saveConfig();
 		Platform.exit();
 
+	}
+
+	/**
+	 * @return the selectionModel
+	 */
+	public  SelectionModel getSelectionModel() {
+		return this.selectionModel;
 	}
 
 }

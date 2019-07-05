@@ -7,9 +7,10 @@ package com.girbola.imageviewer.common.utils;
  */
 import java.nio.file.Path;
 
+import com.girbola.imageviewer.imageviewer.Dialogs;
+
 public class FileUtils {
 
-	
 	private final static String[] SUPPORTED_VIDEO_FORMATS = { "3gp", "avi", "mov", "mp4", "mpg", "mkv" };
 	private final static String[] SUPPORTED_IMAGE_FORMATS = { "png", "jpg", "jpeg", "gif", "bmp", "tiff", "tif" };
 	private final static String[] SUPPORTED_RAW_FORMATS = { "cr2", "nef" };
@@ -64,6 +65,46 @@ public class FileUtils {
 			if (path.getFileName().toString().toLowerCase().endsWith(s.toLowerCase())) {
 				return true;
 			}
+		}
+		return false;
+	}
+
+	/**
+	 * fileSeparator hack replaces file paths "/" separator to "\\" using
+	 * replaceAll("/", "\\\\") method
+	 *
+	 * @param path
+	 * @return
+	 */
+	public static String fileSeparator_mrl(Path path) {
+		String value = path.toString();
+		String newPath = "";
+		if (isWindows()) {
+			newPath = value.replaceAll("/", "\\\\");
+		} else {
+			Dialogs.sprintf("file to mrl format. Was not windows: " + newPath);
+			newPath = path.toString();
+		}
+		return newPath;
+	}
+
+	public static boolean isUnix() {
+		if (System.getProperty("os.name").toLowerCase().contains("nix")) {
+			return true;
+		}
+		return false;
+	}
+
+	public static boolean isMac() {
+		if (System.getProperty("os.name").toLowerCase().contains("mac")) {
+			return true;
+		}
+		return false;
+	}
+
+	public static boolean isWindows() {
+		if (System.getProperty("os.name").toLowerCase().contains("win")) {
+			return true;
 		}
 		return false;
 	}

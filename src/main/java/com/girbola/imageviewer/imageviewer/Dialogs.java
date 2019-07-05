@@ -33,4 +33,8 @@ public class Dialogs {
 		dialogPane.setContentText(model_ImageViewer.getI18nSupport().getBundle().getString("affectNextTime"));
 		alert.showAndWait();
 	}
+
+	public static void sprintf(String string) {
+		System.out.println(string);
+	}
 }

@@ -35,6 +35,7 @@ import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
@@ -284,23 +285,30 @@ public class ImageViewerController {
 						tilePane.setOnMouseClicked(new EventHandler<MouseEvent>() {
 							@Override
 							public void handle(MouseEvent event) {
-								System.out.println("Target: " + event.getTarget());
-								if (event.getTarget() instanceof StackPane && ((Node) event.getTarget()).getId().equals("imageFrame")) {
-									StackPane stackPane = (StackPane) event.getTarget();
-									Path path = (Path) stackPane.getUserData();
-									if (FileUtils.supportedVideo(path)) {
-										System.out.println("Video found!: " + path);
-										viewVideo(path);
-									} else if (FileUtils.supportedImage(path)) {
-										viewImage(path);
-									} else if (FileUtils.supportedRaw(path)) {
+								if (event.getButton().equals(MouseButton.PRIMARY)) {
+									if (event.getClickCount() == 1) {
+										if (event.getTarget() instanceof StackPane && ((Node) event.getTarget()).getId().equals("imageFrame")) {
+											model_ImageViewer.getSelectionModel().add((Node) event.getTarget());
+										}
+									} else if (event.getClickCount() == 2) {
+										System.out.println("Target: " + event.getTarget());
+										if (event.getTarget() instanceof StackPane && ((Node) event.getTarget()).getId().equals("imageFrame")) {
+											StackPane stackPane = (StackPane) event.getTarget();
+											Path path = (Path) stackPane.getUserData();
+											if (FileUtils.supportedVideo(path)) {
+												System.out.println("Video found!: " + path);
+												viewVideo(path);
+											} else if (FileUtils.supportedImage(path)) {
+												viewImage(path);
+											} else if (FileUtils.supportedRaw(path)) {
 
-									} else {
-										Dialogs.showAlert("Not supported media format", AlertType.INFORMATION);
+											} else {
+												Dialogs.showAlert("Not supported media format", AlertType.INFORMATION);
+											}
+										}
 									}
 								}
 							}
-
 						});
 					}
 

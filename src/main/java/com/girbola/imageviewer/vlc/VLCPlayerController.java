@@ -98,12 +98,6 @@ public class VLCPlayerController {
 		pane.setOnMouseMoved(new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent event) {
-				System.out.println("pane moved: " + event);
-				//				System.out.println("hbox: " + hbox);
-				//				Platform.runLater(()-> {
-				//					bottomBar.setVisible(true);
-				//				});
-
 				FadeTransition ft = new FadeTransition(Duration.millis(2200), bottomBar);
 				ft.setFromValue(1.0);
 				ft.setToValue(0.0);
