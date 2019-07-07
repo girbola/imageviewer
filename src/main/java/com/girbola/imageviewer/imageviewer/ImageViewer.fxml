@@ -12,6 +12,7 @@
 <?import javafx.scene.control.TreeView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.TilePane?>
 <?import javafx.scene.layout.VBox?>
 
@@ -45,23 +46,27 @@
                 </Menu>
               </menus>
             </MenuBar>
-            <SplitPane dividerPositions="0.3" VBox.vgrow="ALWAYS">
-               <items>
-                  <TreeView fx:id="folders_treeView" />
-                  <ScrollPane fx:id="scrollPane" fitToHeight="true" fitToWidth="true" vbarPolicy="ALWAYS">
-                     <content>
-                        <TilePane fx:id="tilePane" hgap="1.0" styleClass="tilePane" tileAlignment="TOP_LEFT" vgap="1.0">
+            <StackPane fx:id="stackPane" VBox.vgrow="ALWAYS">
+               <children>
+                  <SplitPane dividerPositions="0.3">
+                     <items>
+                        <TreeView fx:id="folders_treeView" />
+                        <ScrollPane fx:id="scrollPane" fitToHeight="true" fitToWidth="true" vbarPolicy="ALWAYS">
+                           <content>
+                              <TilePane fx:id="tilePane" hgap="1.0" styleClass="tilePane" tileAlignment="TOP_LEFT" vgap="1.0">
+                                 <padding>
+                                    <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
+                                 </padding>
+                              </TilePane>
+                           </content>
                            <padding>
-                              <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
+                              <Insets top="1.0" />
                            </padding>
-                        </TilePane>
-                     </content>
-                     <padding>
-                        <Insets top="1.0" />
-                     </padding>
-                  </ScrollPane>
-               </items>
-            </SplitPane>
+                        </ScrollPane>
+                     </items>
+                  </SplitPane>
+               </children>
+            </StackPane>
             <HBox maxHeight="100.0" styleClass="hbox" VBox.vgrow="NEVER">
                <children>
                   <Button fx:id="import_btn" mnemonicParsing="false" onAction="#import_btn_action" text="%openFolder" textAlignment="CENTER" />

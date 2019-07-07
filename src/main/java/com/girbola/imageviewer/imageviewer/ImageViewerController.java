@@ -76,6 +76,8 @@ public class ImageViewerController {
 	private TilePane tilePane;
 	@FXML
 	private ResourceBundle bundle;
+	@FXML
+	private StackPane stackPane;
 
 	@FXML
 	private void settings_menuItem_action(ActionEvent event) {

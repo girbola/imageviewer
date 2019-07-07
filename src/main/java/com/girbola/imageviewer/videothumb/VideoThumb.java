@@ -16,6 +16,8 @@ import org.jcodec.common.io.NIOUtils;
 import org.jcodec.common.model.Picture;
 import org.jcodec.scale.AWTUtil;
 
+import com.girbola.imageviewer.imageviewer.Dialogs;
+
 import net.coobird.thumbnailator.Thumbnails;
 
 public class VideoThumb {
@@ -27,18 +29,21 @@ public class VideoThumb {
 			return null;
 		}
 		List<Double> listOfTimeLine = grabListOfTimeLine(duration);
-		list = grab(file, listOfTimeLine);
+		list = grabBufferedImageList(file, listOfTimeLine);
 		System.out.println("Total duration: " + duration + " GetList done: " + list.size());
 		return list;
 	}
 
-	private static List<BufferedImage> grab(File file, List<Double> list) {
+	private static List<BufferedImage> grabBufferedImageList(File file, List<Double> list) {
 		List<BufferedImage> buff_list = new ArrayList<>();
 		if (list == null) {
 			return null;
 		}
 		if (list.isEmpty()) {
 			return null;
+		}
+		for (Double db : list) {
+			Dialogs.sprintf("Double: " + db);
 		}
 		FrameGrab grab = null;
 		try {
@@ -47,11 +52,13 @@ public class VideoThumb {
 			if (list.size() > 1) {
 				for (int i = 1; i < list.size(); i++) {
 					double sec = list.get(i);
+					Dialogs.sprintf("sec: " + i);
 					Picture picture = grab.getNativeFrame();
 					BufferedImage buff = AWTUtil.toBufferedImage(picture);
 					buff = Thumbnails.of(buff).height(150).keepAspectRatio(true).asBufferedImage();
 					if (buff != null) {
 						buff_list.add(buff);
+						Dialogs.sprintf("sec before seek: " + sec);
 						grab.seekToSecondSloppy(sec);
 					}
 				}
@@ -87,6 +94,7 @@ public class VideoThumb {
 	}
 
 	public static double getVideoLenght(File file) {
+		Dialogs.sprintf("getVideoLenght: " + file);
 		Format f = null;
 		try {
 			f = JCodecUtil.detectFormat(file);
