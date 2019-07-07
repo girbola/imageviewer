@@ -6,12 +6,10 @@
  */
 package com.girbola.imageviewer.imageviewer;
 
-
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
 
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.collections.FXCollections;
@@ -28,7 +26,8 @@ import javafx.scene.layout.Pane;
  */
 public class SelectionModel {
 
-	final private String style_deselected = "-fx-border-color: white;" + "-fx-border-radius: 1 1 <1 1;" + "-fx-border-style: none;" + "-fx-border-width: 2px;";
+	final private String style_deselected = "-fx-border-color: white;" + "-fx-border-radius: 1 1 <1 1;" + "-fx-border-style: none;"
+			+ "-fx-border-width: 2px;";
 	final private String style_removed = "-fx-border-color: red;" + "-fx-border-width: 2px;";
 	final private String style_selected = "-fx-border-color: red;" + "-fx-border-width: 2px;";
 
@@ -78,7 +77,6 @@ public class SelectionModel {
 		}
 
 	}
-	
 
 	public synchronized void clearAll() {
 		Dialogs.sprintf("clearing all");
