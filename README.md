@@ -2,6 +2,9 @@
 
 ImageView is a simple program for viewing images.
 
+
+
+
 ImageViewer.0.1.3
 ===============
 First version pre-release.
