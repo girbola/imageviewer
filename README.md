@@ -2,6 +2,16 @@
 
 ImageView is a simple program for viewing images.
 
+ImageViewer.0.1.3
+===============
+First version pre-release.
+
+
+ImageViewer.0.2.0
+===============
+- Added short video preview to able to see what video contains using JCodec.
+- Added VLC player using VLCJ library
+
 ## External libraries used in this program
 ### Metadata-extractor 2.11.0
 https://github.com/drewnoakes/metadata-extractor
@@ -9,6 +19,8 @@ https://github.com/drewnoakes/metadata-extractor
 ### JCodec 0.2.3
 https://github.com/jcodec/jcodec
 
+### VLCJ 4.1.0
+https://github.com/caprica/vlcj
 
 ## Supported file formats for creating thumbnails
 - __Video__
