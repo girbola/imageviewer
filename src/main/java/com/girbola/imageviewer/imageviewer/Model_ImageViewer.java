@@ -1,9 +1,7 @@
 package com.girbola.imageviewer.imageviewer;
 
-import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
@@ -25,9 +23,28 @@ public class Model_ImageViewer {
 	private SelectionModel selectionModel = new SelectionModel();
 
 	public Model_ImageViewer() {
-		loadConfig();
+		boolean loaded = loadConfig();
+		if (!loaded) {
+			Dialogs.sprintf("loaded were false. Creating required program path(s)");
+			boolean created = createProgramPaths();
+			if (!created) {
+				Dialogs.sprintf("Could not able to create directories. Exiting...");
+				Platform.exit();
+			}
+		}
 		i18nSupport = new I18NSupport(configuration.getLanguage(), configuration.getCountry());
-		//		dialogs = new Dialogs(this);
+	}
+
+	private boolean createProgramPaths() {
+		Path appDataPath = configuration.getAppDataPath();
+		try {
+			Files.createDirectories(appDataPath);
+			return true;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+
 	}
 
 	public Dialogs getDialogs() {
@@ -67,13 +84,13 @@ public class Model_ImageViewer {
 
 	}
 
-	public Path getConfigPath() {
-		Path path = Paths.get("." + File.separator + "config.dat");
-		return path;
-	}
+	//	public Path getConfigPath() {
+	//		Path path = Paths.get(configuration.getAppDataPath().toString() + File.separator + "config.dat");
+	//		return path;
+	//	}
 
 	public void saveConfig() {
-		Path path = getConfigPath();
+		Path path = configuration.getConfigDataPath();
 		try {
 			JAXBContext context = JAXBContext.newInstance(Configuration.class);
 			Marshaller marshaller = context.createMarshaller();
@@ -88,22 +105,24 @@ public class Model_ImageViewer {
 
 	}
 
-	private void loadConfig() {
-		Path path = getConfigPath();
+	private boolean loadConfig() {
+		Path path = configuration.getConfigDataPath();
 		System.out.println("loading config: " + path);
 		if (!Files.exists(path)) {
 			System.out.println("Config file doesn't exists: " + path);
-			return;
+			return false;
 		}
 		try {
 			JAXBContext jabx = JAXBContext.newInstance(Configuration.class);
 			Unmarshaller unmarshaller = jabx.createUnmarshaller();
 			Configuration configuration = (Configuration) unmarshaller.unmarshal(path.toFile());
 			setConfiguration(configuration);
+			return true;
 		} catch (JAXBException e) {
 			e.printStackTrace();
-			Dialogs.errorAlert(e.getMessage(), this);
-			closeProgram();
+			return false;
+			//			Dialogs.errorAlert(e.getMessage(), this);
+			//			closeProgram();
 		}
 
 	}
@@ -118,7 +137,7 @@ public class Model_ImageViewer {
 	/**
 	 * @return the selectionModel
 	 */
-	public  SelectionModel getSelectionModel() {
+	public SelectionModel getSelectionModel() {
 		return this.selectionModel;
 	}
 

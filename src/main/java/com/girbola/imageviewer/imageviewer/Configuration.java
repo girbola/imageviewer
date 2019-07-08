@@ -1,5 +1,9 @@
 package com.girbola.imageviewer.imageviewer;
 
+import java.io.File;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -16,6 +20,8 @@ public class Configuration {
 	private String country = Language.ENGLISH.getType();
 	private SimpleStringProperty vlcPath = new SimpleStringProperty("");
 	private SimpleBooleanProperty isVLCSupported = new SimpleBooleanProperty(false);
+	private final Path appDataPath = Paths.get(System.getenv("APPDATA") + File.separator + "imageviewer");
+	private final Path configDataPath = Paths.get(appDataPath.toString() + File.separator + "config.dat");
 
 	public String getCountry() {
 		return country;
@@ -76,6 +82,20 @@ public class Configuration {
 	 */
 	public void setVLCSupported(boolean isVLCSupported) {
 		this.isVLCSupported.set(isVLCSupported);
+	}
+
+	/**
+	 * @return the appDataPath
+	 */
+	public final Path getAppDataPath() {
+		return appDataPath;
+	}
+
+	/**
+	 * @return the configDataPath
+	 */
+	public final Path getConfigDataPath() {
+		return configDataPath;
 	}
 
 }

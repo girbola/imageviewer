@@ -1,6 +1,8 @@
 package com.girbola.imageviewer.imageviewer;
 
 import javafx.application.Application;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -58,12 +60,6 @@ public class ImageViewer extends Application {
 			e.printStackTrace();
 		}
 
-//		stage.setWidth(763);
-//		stage.setMinWidth(763);
-//		stage.setMinHeight(685);
-//		stage.setMaxHeight(685);
-//		stage.setHeight(685);
-//		stage.setResizable(false);
 		stage.setTitle("ImageViewer");
 		stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
 			@Override
@@ -77,21 +73,14 @@ public class ImageViewer extends Application {
 		Scene scene = new Scene(root);
 		scene.getStylesheets().add(ImageViewer.class.getResource("/com/girbola/imageviewer/themes/ImageViewer.css").toExternalForm());
 		stage.setScene(scene);
+		stage.showingProperty().addListener(new ChangeListener<Boolean>() {
+
+			@Override
+			public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+				initVlc();
+			}
+		});
 		stage.show();
-		initVlc();
-
-		//		Object loadLibrary = null;
-		//
-		//		try {
-		//			loadLibrary = Native.loadLibrary(RuntimeUtil.getLibVlcLibraryName(), LibVlc.class);
-		//			model_ImageViewer.getConfiguration().setVLCSupported(true);
-		//			System.out.println("vlc supported!!");
-		//		} catch (UnsatisfiedLinkError ex) {
-		//			System.out.println("VLC won't work! " + ex);
-		//			//			setVlcSupport(false);
-		//			model_ImageViewer.getConfiguration().setVLCSupported(false);
-		//		
-
 	}
 
 	public boolean discovery() {
@@ -115,20 +104,7 @@ public class ImageViewer extends Application {
 	}
 
 	private void initVlc() {
-discovery();
-		/*	try {
-		System.setProperty("VLC_PLUGIN_PATH", Paths.get("C:\\Program Files\\VideoLAN\\VLC").getParent() + File.separator + "plugins");
-				NativeLibrary.addSearchPath(RuntimeUtil.getLibVlcLibraryName(), Paths.get("C:\\Program Files\\VideoLAN\\VLC").getParent().toString());
-		boolean found = new NativeDiscovery().discover();
-		System.out.println("foudn? " + found);
-			
-				System.out.println("Path add: " + Paths.get("C:\\Program Files\\VideoLAN\\VLC").getParent().toString());
-				System.out.println(Paths.get("C:\\Program Files\\VideoLAN\\VLC").getParent() + "plugins");
-				//			NativeLibrary.addSearchPath(RuntimeUtil.getLibVlcLibraryName(), System.getProperty("C:/Program Files/VideoLAN/VLC/plugins"));
-				//			System.setProperty("VLC_PLUGIN_PATH", System.getProperty("C:/Program Files/VideoLAN/VLC"));
-			} catch (Exception e) {
-				e.printStackTrace();
-			}*/
+		discovery();
 		Info info = Info.getInstance();
 
 		System.out.printf("vlcj             : %s%n", info.vlcjVersion() != null ? info.vlcjVersion() : "<version not available>");
@@ -146,13 +122,6 @@ discovery();
 			System.out.printf("DYLD_LIBRARY_PATH          : %s%n", (info.dyldLibraryPath()));
 			System.out.printf("DYLD_FALLBACK_LIBRARY_PATH : %s%n", (info.dyldFallbackLibraryPath()));
 		}
-
-		//	        if (null != NATIVE_LIBRARY_SEARCH_PATH) {
-		//	            NativeLibrary.addSearchPath(RuntimeUtil.getLibVlcLibraryName(), NATIVE_LIBRARY_SEARCH_PATH);
-		//	        }
-		//
-		//	        System.setProperty("jna.dump_memory", DUMP_NATIVE_MEMORY);
-
 	}
 
 	public static void main(String[] args) {

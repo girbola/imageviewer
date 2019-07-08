@@ -223,7 +223,6 @@ public class ImageViewerController {
 		model_ImageViewer.setScrollPane(scrollPane);
 		model_ImageViewer.init();
 		model_ImageViewer.getRenderVisibleNode().registerScrollPaneProperties();
-		// model_ImageViewer.getConfiguration().load(file);
 		if (model_ImageViewer.getConfiguration().getCountry().equals(Language.ENGLISH.getType())) {
 			language_english_radio.setSelected(true);
 		} else if (model_ImageViewer.getConfiguration().getCountry().equals(Language.FINNISH.getType())) {
