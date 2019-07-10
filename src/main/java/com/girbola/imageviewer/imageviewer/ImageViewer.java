@@ -1,5 +1,7 @@
 package com.girbola.imageviewer.imageviewer;
 
+import com.sun.jna.NativeLibrary;
+
 import javafx.application.Application;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -77,51 +79,13 @@ public class ImageViewer extends Application {
 
 			@Override
 			public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
-				initVlc();
+				if (model_ImageViewer.getConfiguration().isVLCSupported()) {
+					Dialogs.sprintf("Initalizing VLC");
+					model_ImageViewer.initVlc();
+				}
 			}
 		});
 		stage.show();
-	}
-
-	public boolean discovery() {
-		NativeDiscovery dis = new NativeDiscovery() {
-
-			@Override
-			protected void onFound(String path, NativeDiscoveryStrategy strategy) {
-				System.out.println("Found; " + " path: " + path + " strategy: " + strategy);
-			}
-
-			@Override
-			protected void onNotFound() {
-				System.out.println("Native not found");
-			}
-
-		};
-		boolean found = new NativeDiscovery().discover();
-		System.out.println("found? " + found);
-
-		return false;
-	}
-
-	private void initVlc() {
-		discovery();
-		Info info = Info.getInstance();
-
-		System.out.printf("vlcj             : %s%n", info.vlcjVersion() != null ? info.vlcjVersion() : "<version not available>");
-		System.out.printf("os               : %s%n", (info.os()));
-		System.out.printf("java             : %s%n", (info.javaVersion()));
-		System.out.printf("java.home        : %s%n", (info.javaHome()));
-		System.out.printf("jna.library.path : %s%n", (info.jnaLibraryPath()));
-		System.out.printf("java.library.path: %s%n", (info.javaLibraryPath()));
-		System.out.printf("PATH             : %s%n", (info.path()));
-		System.out.printf("VLC_PLUGIN_PATH  : %s%n", (info.pluginPath()));
-
-		if (RuntimeUtil.isNix()) {
-			System.out.printf("LD_LIBRARY_PATH  : %s%n", (info.ldLibraryPath()));
-		} else if (RuntimeUtil.isMac()) {
-			System.out.printf("DYLD_LIBRARY_PATH          : %s%n", (info.dyldLibraryPath()));
-			System.out.printf("DYLD_FALLBACK_LIBRARY_PATH : %s%n", (info.dyldFallbackLibraryPath()));
-		}
 	}
 
 	public static void main(String[] args) {

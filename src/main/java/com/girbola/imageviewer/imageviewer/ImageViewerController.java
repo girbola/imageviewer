@@ -1,5 +1,6 @@
 package com.girbola.imageviewer.imageviewer;
 
+import java.awt.Desktop;
 import java.io.File;
 import java.nio.file.Path;
 import java.util.Locale;
@@ -37,7 +38,6 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.TilePane;
 import javafx.stage.DirectoryChooser;
@@ -89,6 +89,7 @@ public class ImageViewerController {
 			loader.setResources(model_ImageViewer.getI18nSupport().getBundle());
 			root = loader.load();
 			settingsController = (SettingsController) loader.getController();
+			settingsController.init(model_ImageViewer);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -96,6 +97,14 @@ public class ImageViewerController {
 		options.getStylesheets().add(ImageViewer.class.getResource("/com/girbola/imageviewer/themes/Options.css").toExternalForm());
 
 		Stage stage = new Stage();
+		stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+
+			@Override
+			public void handle(WindowEvent event) {
+				model_ImageViewer.saveConfig();
+			}
+
+		});
 		stage.setScene(options);
 		stage.show();
 	}
@@ -298,7 +307,15 @@ public class ImageViewerController {
 											Path path = (Path) stackPane.getUserData();
 											if (FileUtils.supportedVideo(path)) {
 												System.out.println("Video found!: " + path);
-												viewVideo(path);
+												if (model_ImageViewer.getConfiguration().isVLCSupported()) {
+													viewVideo(path);
+												} else {
+													try {
+														Desktop.getDesktop().open(path.toFile());
+													} catch (Exception e) {
+														Dialogs.errorAlert(e.getMessage(), model_ImageViewer);
+													}
+												}
 											} else if (FileUtils.supportedImage(path)) {
 												viewImage(path);
 											} else if (FileUtils.supportedRaw(path)) {

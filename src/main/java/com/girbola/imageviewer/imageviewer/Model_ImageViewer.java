@@ -8,8 +8,17 @@ import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
 
+import com.sun.jna.NativeLibrary;
+
 import javafx.application.Platform;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ScrollPane;
+import uk.co.caprica.vlcj.binding.RuntimeUtil;
+import uk.co.caprica.vlcj.factory.discovery.NativeDiscovery;
+import uk.co.caprica.vlcj.factory.discovery.strategy.NativeDiscoveryStrategy;
+import uk.co.caprica.vlcj.support.Info;
+import uk.co.caprica.vlcj.support.version.LibVlcVersion;
+import uk.co.caprica.vlcj.support.version.Version;
 
 public class Model_ImageViewer {
 
@@ -89,7 +98,7 @@ public class Model_ImageViewer {
 	//		return path;
 	//	}
 
-	public void saveConfig() {
+	public boolean saveConfig() {
 		Path path = configuration.getConfigDataPath();
 		try {
 			JAXBContext context = JAXBContext.newInstance(Configuration.class);
@@ -97,10 +106,12 @@ public class Model_ImageViewer {
 			marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
 			marshaller.marshal(getConfiguration(), System.out);
 			marshaller.marshal(getConfiguration(), path.toFile());
+			return true;
 		} catch (JAXBException e) {
 			e.printStackTrace();
 			Dialogs.errorAlert(e.getMessage(), this);
 			closeProgram();
+			return false;
 		}
 
 	}
@@ -130,8 +141,7 @@ public class Model_ImageViewer {
 	public void closeProgram() {
 		getRenderVisibleNode().terminateAllBackgroundTasks();
 		saveConfig();
-		Platform.exit();
-
+		//		Platform.exit();
 	}
 
 	/**
@@ -139,6 +149,75 @@ public class Model_ImageViewer {
 	 */
 	public SelectionModel getSelectionModel() {
 		return this.selectionModel;
+	}
+
+	private void getLib() {
+		Dialogs.sprintf("getLib started");
+		LibVlcVersion lbl = new LibVlcVersion();
+		if (lbl.getRequiredVersion().atLeast(lbl.getVersion())) {
+			Dialogs.sprintf("" + i18nSupport.getBundle().getString("vlcPlayerVersionIsOld") + " ver: " + lbl.getVersion() + " req: "+lbl.getRequiredVersion());
+			Dialogs.showAlert(i18nSupport.getBundle().getString("vlcPlayerVersionIsOld"), AlertType.WARNING);
+			Dialogs.sprintf("getRequiredVersion " + lbl.getRequiredVersion());
+			configuration.setVLCSupported(false);
+		}
+		try {
+			Version version = lbl.getVersion();
+			Dialogs.sprintf("Version is: " + version.toString());
+		} catch (Exception e) {
+		}
+	}
+
+	public boolean discovery() {
+
+		NativeLibrary.addSearchPath("libvlc", "C:\\Program Files\\VideoLAN\\VLC");
+
+		NativeDiscovery dis = new NativeDiscovery() {
+
+			@Override
+			protected void onFound(String path, NativeDiscoveryStrategy strategy) {
+				System.out.println("Found; " + " path: " + path + " strategy: " + strategy);
+			}
+
+			@Override
+			protected void onNotFound() {
+				System.out.println("Native not found");
+			}
+		};
+
+		boolean found = new NativeDiscovery().discover();
+		if (found) {
+			System.out.println("found? " + found + " discoveredPath: " + dis.discoveredPath());
+			getLib();
+			return true;
+		}
+
+		return false;
+	}
+
+	public void initVlc() {
+		boolean found = discovery();
+		if (found) {
+			Dialogs.sprintf("Found");
+		} else {
+			Dialogs.sprintf("Not Found");
+		}
+		Info info = Info.getInstance();
+
+		System.out.printf("vlcj             : %s%n", info.vlcjVersion() != null ? info.vlcjVersion() : "<version not available>");
+		System.out.printf("os               : %s%n", (info.os()));
+		System.out.printf("java             : %s%n", (info.javaVersion()));
+		System.out.printf("java.home        : %s%n", (info.javaHome()));
+		System.out.printf("jna.library.path : %s%n", (info.jnaLibraryPath()));
+		System.out.printf("java.library.path: %s%n", (info.javaLibraryPath()));
+		System.out.printf("PATH             : %s%n", (info.path()));
+		System.out.printf("VLC_PLUGIN_PATH  : %s%n", (info.pluginPath()));
+
+		if (RuntimeUtil.isNix()) {
+			System.out.printf(" LD_LIBRARY_PATH  : %s%n", (info.ldLibraryPath()));
+		} else if (RuntimeUtil.isMac()) {
+			System.out.printf("DYLD_LIBRARY_PATH          : %s%n", (info.dyldLibraryPath()));
+			System.out.printf("DYLD_FALLBACK_LIBRARY_PATH : %s%n", (info.dyldFallbackLibraryPath()));
+		}
 	}
 
 }

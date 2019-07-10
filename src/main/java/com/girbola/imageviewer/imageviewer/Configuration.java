@@ -19,7 +19,7 @@ public class Configuration {
 	private String language = Language.ENGLISH.getType().toLowerCase();
 	private String country = Language.ENGLISH.getType();
 	private SimpleStringProperty vlcPath = new SimpleStringProperty("");
-	private SimpleBooleanProperty isVLCSupported = new SimpleBooleanProperty(false);
+	private SimpleBooleanProperty vlcSupported = new SimpleBooleanProperty(false);
 	private final Path appDataPath = Paths.get(System.getenv("APPDATA") + File.separator + "imageviewer");
 	private final Path configDataPath = Paths.get(appDataPath.toString() + File.separator + "config.dat");
 
@@ -63,25 +63,25 @@ public class Configuration {
 	}
 
 	/**
-	 * @return the isVLCSupported
+	 * @return the vlcSupported
 	 */
 	public SimpleBooleanProperty isVLCSupported_property() {
-		return isVLCSupported;
+		return vlcSupported;
 	}
 
 	/**
-	 * @return the isVLCSupported
+	 * @return the vlcSupported
 	 */
-	public boolean getIsVLCSupported() {
-		return this.isVLCSupported.get();
+	public boolean isVLCSupported() {
+		return this.vlcSupported.get();
 	}
 
 	/**
 	 * 
-	 * @param isVLCSupported
+	 * @param vlcSupported
 	 */
 	public void setVLCSupported(boolean isVLCSupported) {
-		this.isVLCSupported.set(isVLCSupported);
+		this.vlcSupported.set(isVLCSupported);
 	}
 
 	/**
