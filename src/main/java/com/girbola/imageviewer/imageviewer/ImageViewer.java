@@ -76,7 +76,6 @@ public class ImageViewer extends Application {
 		scene.getStylesheets().add(ImageViewer.class.getResource("/com/girbola/imageviewer/themes/ImageViewer.css").toExternalForm());
 		stage.setScene(scene);
 		stage.showingProperty().addListener(new ChangeListener<Boolean>() {
-
 			@Override
 			public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
 				if (newValue) {
@@ -88,6 +87,7 @@ public class ImageViewer extends Application {
 			}
 		});
 		stage.show();
+		
 	}
 
 	public static void main(String[] args) {
