@@ -60,10 +60,11 @@ public class DrawPane extends Task<Void> {
 		});
 
 		if (folder.length == 0) {
-			model_ImageViewer.getRenderVisibleNode().initExec();
+//			model_ImageViewer.getRenderVisibleNode().initExec();
 			System.out.println("Folder is empty");
 			return null;
 		}
+		model_ImageViewer.getRenderVisibleNode().initExec();
 		for (File file : folder) {
 			if (FileUtils.supportedMediaFormat(file.toPath())) {
 				StackPane pane = createPane(file.toPath(), model_ImageViewer.getWidth());

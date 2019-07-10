@@ -6,11 +6,11 @@ import javafx.scene.control.DialogPane;
 import javafx.scene.control.TextArea;
 
 public class Dialogs {
-//	private Model_ImageViewer model_ImageViewer;
+	//	private Model_ImageViewer model_ImageViewer;
 
-//	public Dialogs(Model_ImageViewer model_ImageViewer) {
-//		this.model_ImageViewer = model_ImageViewer;
-//	}
+	//	public Dialogs(Model_ImageViewer model_ImageViewer) {
+	//		this.model_ImageViewer = model_ImageViewer;
+	//	}
 
 	public static void showAlert(String message, AlertType alertType) {
 		Alert alert = new Alert(alertType);
@@ -35,6 +35,13 @@ public class Dialogs {
 	}
 
 	public static void sprintf(String string) {
-		System.out.println(string);
+		if (ImageViewer.DEBUG) {
+			System.out.println(string);
+		}
+	}
+
+	public static void printf(String string, Object object) {
+		System.out.printf(string, object);
+
 	}
 }

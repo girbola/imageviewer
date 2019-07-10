@@ -41,6 +41,7 @@ import uk.co.caprica.vlcj.support.Info;
 
 public class ImageViewer extends Application {
 
+	public static final boolean DEBUG = true;
 	private Model_ImageViewer model_ImageViewer;
 
 	@Override
@@ -87,7 +88,7 @@ public class ImageViewer extends Application {
 			}
 		});
 		stage.show();
-		
+
 	}
 
 	public static void main(String[] args) {

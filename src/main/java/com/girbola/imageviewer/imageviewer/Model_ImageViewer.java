@@ -185,10 +185,10 @@ public class Model_ImageViewer {
 				System.out.println("Native not found");
 			}
 		};
-
-		boolean found = new NativeDiscovery().discover();
+		boolean found = dis.discover(); //new NativeDiscovery().discover();
 		if (found) {
 			System.out.println("found? " + found + " discoveredPath: " + dis.discoveredPath());
+			configuration.setVlcPath(dis.discoveredPath());
 			getLib();
 			return true;
 		}
@@ -205,20 +205,20 @@ public class Model_ImageViewer {
 		}
 		Info info = Info.getInstance();
 
-		System.out.printf("vlcj             : %s%n", info.vlcjVersion() != null ? info.vlcjVersion() : "<version not available>");
-		System.out.printf("os               : %s%n", (info.os()));
-		System.out.printf("java             : %s%n", (info.javaVersion()));
-		System.out.printf("java.home        : %s%n", (info.javaHome()));
-		System.out.printf("jna.library.path : %s%n", (info.jnaLibraryPath()));
-		System.out.printf("java.library.path: %s%n", (info.javaLibraryPath()));
-		System.out.printf("PATH             : %s%n", (info.path()));
-		System.out.printf("VLC_PLUGIN_PATH  : %s%n", (info.pluginPath()));
+		Dialogs.printf("vlcj             : %s%n", info.vlcjVersion() != null ? info.vlcjVersion() : "<version not available>");
+		Dialogs.printf("os               : %s%n", (info.os()));
+		Dialogs.printf("java             : %s%n", (info.javaVersion()));
+		Dialogs.printf("java.home        : %s%n", (info.javaHome()));
+		Dialogs.printf("jna.library.path : %s%n", (info.jnaLibraryPath()));
+		Dialogs.printf("java.library.path: %s%n", (info.javaLibraryPath()));
+		Dialogs.printf("PATH             : %s%n", (info.path()));
+		Dialogs.printf("VLC_PLUGIN_PATH  : %s%n", (info.pluginPath()));
 
 		if (RuntimeUtil.isNix()) {
-			System.out.printf(" LD_LIBRARY_PATH  : %s%n", (info.ldLibraryPath()));
+			Dialogs.printf(" LD_LIBRARY_PATH  : %s%n", (info.ldLibraryPath()));
 		} else if (RuntimeUtil.isMac()) {
-			System.out.printf("DYLD_LIBRARY_PATH          : %s%n", (info.dyldLibraryPath()));
-			System.out.printf("DYLD_FALLBACK_LIBRARY_PATH : %s%n", (info.dyldFallbackLibraryPath()));
+			Dialogs.printf("DYLD_LIBRARY_PATH          : %s%n", (info.dyldLibraryPath()));
+			Dialogs.printf("DYLD_FALLBACK_LIBRARY_PATH : %s%n", (info.dyldFallbackLibraryPath()));
 		}
 	}
 

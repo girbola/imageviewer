@@ -48,7 +48,7 @@
             </MenuBar>
             <StackPane fx:id="stackPane" VBox.vgrow="ALWAYS">
                <children>
-                  <SplitPane dividerPositions="0.3">
+                  <SplitPane dividerPositions="0.2">
                      <items>
                         <TreeView fx:id="folders_treeView" />
                         <ScrollPane fx:id="scrollPane" fitToHeight="true" fitToWidth="true" vbarPolicy="ALWAYS">
