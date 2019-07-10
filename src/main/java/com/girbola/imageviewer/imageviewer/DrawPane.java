@@ -60,7 +60,6 @@ public class DrawPane extends Task<Void> {
 		});
 
 		if (folder.length == 0) {
-//			model_ImageViewer.getRenderVisibleNode().initExec();
 			System.out.println("Folder is empty");
 			return null;
 		}
@@ -103,45 +102,45 @@ public class DrawPane extends Task<Void> {
 		imageFrame.setPrefSize(width, width);
 		imageFrame.setMinSize(width, width);
 		imageFrame.setMaxSize(width, width);
-//		imageFrame.setOnMouseClicked(new EventHandler<MouseEvent>() {
-//			@Override
-//			public void handle(MouseEvent event) {
-//				if (event.getClickCount() == 2) {
-//					if (FileUtils.supportedImage(path)) {
-//						//						viewImage(path);
-//					} else if (FileUtils.supportedVideo(path)) {
-//						try {
-//							Parent root = null;
-//							FXMLLoader loader = new FXMLLoader(VLCPlayerController.class.getResource("VLCPlayer.fxml"));
-//							root = loader.load();
-//							VLCPlayerController vlcPlayerController = (VLCPlayerController) loader.getController();
-//							Scene scene = new Scene(root);
-//							scene.getStylesheets()
-//									.add(ImageViewer.class.getResource("/com/girbola/imageviewer/themes/ImageViewer.css").toExternalForm());
-//
-//							Stage stage = new Stage();
-//							stage.setScene(scene);
-//							vlcPlayerController.init(path, stage);
-//							stage.show();
-//							stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
-//
-//								@Override
-//								public void handle(WindowEvent event) {
-//									vlcPlayerController.getMediaPlayer().release();
-//								}
-//
-//							});
-//							/*VLCPlayeri vlc = new VLCPlayeri(path);
-//							vlc.initPlayer(); */
-//						} catch (Exception e) {
-//							// TODO Auto-generated catch block
-//							e.printStackTrace();
-//						}
-//					}
-//				}
-//			}
-//
-//		});
+		//		imageFrame.setOnMouseClicked(new EventHandler<MouseEvent>() {
+		//			@Override
+		//			public void handle(MouseEvent event) {
+		//				if (event.getClickCount() == 2) {
+		//					if (FileUtils.supportedImage(path)) {
+		//						//						viewImage(path);
+		//					} else if (FileUtils.supportedVideo(path)) {
+		//						try {
+		//							Parent root = null;
+		//							FXMLLoader loader = new FXMLLoader(VLCPlayerController.class.getResource("VLCPlayer.fxml"));
+		//							root = loader.load();
+		//							VLCPlayerController vlcPlayerController = (VLCPlayerController) loader.getController();
+		//							Scene scene = new Scene(root);
+		//							scene.getStylesheets()
+		//									.add(ImageViewer.class.getResource("/com/girbola/imageviewer/themes/ImageViewer.css").toExternalForm());
+		//
+		//							Stage stage = new Stage();
+		//							stage.setScene(scene);
+		//							vlcPlayerController.init(path, stage);
+		//							stage.show();
+		//							stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+		//
+		//								@Override
+		//								public void handle(WindowEvent event) {
+		//									vlcPlayerController.getMediaPlayer().release();
+		//								}
+		//
+		//							});
+		//							/*VLCPlayeri vlc = new VLCPlayeri(path);
+		//							vlc.initPlayer(); */
+		//						} catch (Exception e) {
+		//							// TODO Auto-generated catch block
+		//							e.printStackTrace();
+		//						}
+		//					}
+		//				}
+		//			}
+		//
+		//		});
 		return imageFrame;
 	}
 
