@@ -155,7 +155,8 @@ public class Model_ImageViewer {
 		Dialogs.sprintf("getLib started");
 		LibVlcVersion lbl = new LibVlcVersion();
 		if (lbl.getRequiredVersion().atLeast(lbl.getVersion())) {
-			Dialogs.sprintf("" + i18nSupport.getBundle().getString("vlcPlayerVersionIsOld") + " ver: " + lbl.getVersion() + " req: "+lbl.getRequiredVersion());
+			Dialogs.sprintf("" + i18nSupport.getBundle().getString("vlcPlayerVersionIsOld") + " ver: " + lbl.getVersion() + " req: "
+					+ lbl.getRequiredVersion());
 			Dialogs.showAlert(i18nSupport.getBundle().getString("vlcPlayerVersionIsOld"), AlertType.WARNING);
 			Dialogs.sprintf("getRequiredVersion " + lbl.getRequiredVersion());
 			configuration.setVLCSupported(false);
@@ -164,11 +165,12 @@ public class Model_ImageViewer {
 			Version version = lbl.getVersion();
 			Dialogs.sprintf("Version is: " + version.toString());
 		} catch (Exception e) {
+			Dialogs.sprintf("Can not find Version class of vlcj");
 		}
 	}
 
 	public boolean discovery() {
-
+		Dialogs.sprintf("disvocery started");
 		NativeLibrary.addSearchPath("libvlc", "C:\\Program Files\\VideoLAN\\VLC");
 
 		NativeDiscovery dis = new NativeDiscovery() {

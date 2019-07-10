@@ -79,9 +79,11 @@ public class ImageViewer extends Application {
 
 			@Override
 			public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
-				if (model_ImageViewer.getConfiguration().isVLCSupported()) {
-					Dialogs.sprintf("Initalizing VLC");
-					model_ImageViewer.initVlc();
+				if (newValue) {
+					if (model_ImageViewer.getConfiguration().isVLCSupported()) {
+						Dialogs.sprintf("Initalizing VLC");
+						model_ImageViewer.initVlc();
+					}
 				}
 			}
 		});
