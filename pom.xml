@@ -17,8 +17,8 @@
 		<vlcj.version>4.1.0</vlcj.version>
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven.compiler.target>1.8</maven.compiler.target>
-
 	</properties>
+
 	<dependencies>
 
 		<!-- https://mvnrepository.com/artifact/com.drewnoakes/metadata-extractor -->
@@ -108,20 +108,4 @@
 			</plugin>
 		</plugins>
 	</build>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 </project>

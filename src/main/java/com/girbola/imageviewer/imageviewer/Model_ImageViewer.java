@@ -2,6 +2,7 @@ package com.girbola.imageviewer.imageviewer;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
@@ -30,6 +31,7 @@ public class Model_ImageViewer {
 	private Configuration configuration = new Configuration();
 	private Dialogs dialogs;
 	private SelectionModel selectionModel = new SelectionModel();
+	private VLCJDiscovery vlcjDiscovery;
 
 	public Model_ImageViewer() {
 		boolean loaded = loadConfig();
@@ -42,6 +44,7 @@ public class Model_ImageViewer {
 			}
 		}
 		i18nSupport = new I18NSupport(configuration.getLanguage(), configuration.getCountry());
+		vlcjDiscovery = new VLCJDiscovery(this);
 	}
 
 	private boolean createProgramPaths() {
@@ -151,75 +154,11 @@ public class Model_ImageViewer {
 		return this.selectionModel;
 	}
 
-	private void getLib() {
-		Dialogs.sprintf("getLib started");
-		LibVlcVersion lbl = new LibVlcVersion();
-		if (lbl.getRequiredVersion().atLeast(lbl.getVersion())) {
-			Dialogs.sprintf("" + i18nSupport.getBundle().getString("vlcPlayerVersionIsOld") + " ver: " + lbl.getVersion() + " req: "
-					+ lbl.getRequiredVersion());
-			Dialogs.showAlert(i18nSupport.getBundle().getString("vlcPlayerVersionIsOld"), AlertType.WARNING);
-			Dialogs.sprintf("getRequiredVersion " + lbl.getRequiredVersion());
-			configuration.setVLCSupported(false);
-		}
-		try {
-			Version version = lbl.getVersion();
-			Dialogs.sprintf("Version is: " + version.toString());
-		} catch (Exception e) {
-			Dialogs.sprintf("Can not find Version class of vlcj");
-		}
-	}
-
-	public boolean discovery() {
-		Dialogs.sprintf("disvocery started");
-		NativeLibrary.addSearchPath("libvlc", "C:\\Program Files\\VideoLAN\\VLC");
-
-		NativeDiscovery dis = new NativeDiscovery() {
-
-			@Override
-			protected void onFound(String path, NativeDiscoveryStrategy strategy) {
-				System.out.println("Found; " + " path: " + path + " strategy: " + strategy);
-			}
-
-			@Override
-			protected void onNotFound() {
-				System.out.println("Native not found");
-			}
-		};
-		boolean found = dis.discover(); //new NativeDiscovery().discover();
-		if (found) {
-			System.out.println("found? " + found + " discoveredPath: " + dis.discoveredPath());
-			configuration.setVlcPath(dis.discoveredPath());
-			getLib();
-			return true;
-		}
-
-		return false;
-	}
-
-	public void initVlc() {
-		boolean found = discovery();
-		if (found) {
-			Dialogs.sprintf("Found");
-		} else {
-			Dialogs.sprintf("Not Found");
-		}
-		Info info = Info.getInstance();
-
-		Dialogs.printf("vlcj             : %s%n", info.vlcjVersion() != null ? info.vlcjVersion() : "<version not available>");
-		Dialogs.printf("os               : %s%n", (info.os()));
-		Dialogs.printf("java             : %s%n", (info.javaVersion()));
-		Dialogs.printf("java.home        : %s%n", (info.javaHome()));
-		Dialogs.printf("jna.library.path : %s%n", (info.jnaLibraryPath()));
-		Dialogs.printf("java.library.path: %s%n", (info.javaLibraryPath()));
-		Dialogs.printf("PATH             : %s%n", (info.path()));
-		Dialogs.printf("VLC_PLUGIN_PATH  : %s%n", (info.pluginPath()));
-
-		if (RuntimeUtil.isNix()) {
-			Dialogs.printf(" LD_LIBRARY_PATH  : %s%n", (info.ldLibraryPath()));
-		} else if (RuntimeUtil.isMac()) {
-			Dialogs.printf("DYLD_LIBRARY_PATH          : %s%n", (info.dyldLibraryPath()));
-			Dialogs.printf("DYLD_FALLBACK_LIBRARY_PATH : %s%n", (info.dyldFallbackLibraryPath()));
-		}
+	/**
+	 * @return the vlcjDiscovery
+	 */
+	public final VLCJDiscovery getVlcjDiscovery() {
+		return vlcjDiscovery;
 	}
 
 }

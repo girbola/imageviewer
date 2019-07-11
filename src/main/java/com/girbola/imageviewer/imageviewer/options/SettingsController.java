@@ -65,7 +65,7 @@ public class SettingsController {
 					Dialogs.sprintf("enabled");
 					model_ImageViewer.getConfiguration().setVLCSupported(true);
 					vlc_container.setDisable(false);
-					model_ImageViewer.initVlc();
+					model_ImageViewer.getVlcjDiscovery().initVlc();
 				} else {
 					Dialogs.sprintf("disabled");
 					model_ImageViewer.getConfiguration().setVLCSupported(false);

@@ -72,7 +72,7 @@ public class ImageViewer extends Application {
 
 		});
 		imageViewerController.init(model_ImageViewer);
-
+		
 		Scene scene = new Scene(root);
 		scene.getStylesheets().add(ImageViewer.class.getResource("/com/girbola/imageviewer/themes/ImageViewer.css").toExternalForm());
 		stage.setScene(scene);
@@ -82,7 +82,7 @@ public class ImageViewer extends Application {
 				if (newValue) {
 					if (model_ImageViewer.getConfiguration().isVLCSupported()) {
 						Dialogs.sprintf("Initalizing VLC");
-						model_ImageViewer.initVlc();
+						model_ImageViewer.getVlcjDiscovery().initVlc();
 					}
 				}
 			}
