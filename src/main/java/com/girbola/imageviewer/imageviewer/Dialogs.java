@@ -42,6 +42,5 @@ public class Dialogs {
 
 	public static void printf(String string, Object object) {
 		System.out.printf(string, object);
-
 	}
 }

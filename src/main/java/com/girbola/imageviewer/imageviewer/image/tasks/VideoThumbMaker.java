@@ -109,22 +109,14 @@ public class VideoThumbMaker extends Task<List<BufferedImage>> {
 
 	}
 
-	/* (non-Javadoc)
-	 * @see javafx.concurrent.Task#cancelled()
-	 */
 	@Override
 	protected void cancelled() {
-		// TODO Auto-generated method stub
 		super.cancelled();
 	}
 
-	/* (non-Javadoc)
-	 * @see javafx.concurrent.Task#failed()
-	 */
 	@Override
 	protected void failed() {
-		// TODO Auto-generated method stub
-		super.failed();
+	super.failed();
 	}
 
 }
