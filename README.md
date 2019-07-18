@@ -12,8 +12,9 @@ First version pre-release.
 
 ImageViewer.0.2.0
 ===============
-- Added short video preview to able to see what video contains using JCodec.
-- Added VLC player using VLCJ library
+- Added short video preview to able to see what video file contains using JCodec.
+- Added VLC player support using VLCJ library. If VLC player does not exists system
+ default player will be used. 
 
 ## External libraries used in this program
 ### Metadata-extractor 2.11.0
@@ -45,11 +46,10 @@ https://github.com/caprica/vlcj
 	- CR2 
 	- NEF
 
-Video player has been exported from this project.
 
 ## Short instructions
 - Select folders on the left side
-- Double-click opens images preview in new window.
+- Double-click to preview images & video.
 
 ### Download compiled file
 https://github.com/girbola/imageviewer/releases
